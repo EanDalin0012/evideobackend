@@ -44,7 +44,7 @@ public class ResourceServerConfigAdapter extends ResourceServerConfigurerAdapter
                 .antMatchers(new String[] {"/"}).permitAll()
                 .antMatchers(new String[]{
                         "/api/image*/**",
-                        "/unsecure*/**",
+                        "/unsecur*/**",
                         "/wechat*/**",
                         "/ecomv*/**"
                 }).permitAll()

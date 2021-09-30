@@ -1,4 +1,5 @@
-package com.evideo.evideobackend.web;
+package com.evideo.evideobackend.unsecur.rest;
+
 
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
@@ -13,8 +14,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 
 @RestController
-@RequestMapping(value = "/unsecur/api/read/vd")
-public class ReadVD {
+@RequestMapping(value = "/api/read/vd")
+public class VideoRestUnSecur {
 
     @GetMapping(value = "/v0")
     public ResponseEntity LInputStreamResourceretrieveResource() throws Exception {
