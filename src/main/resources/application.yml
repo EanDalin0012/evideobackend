@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/lottory
+    url: jdbc:postgresql://localhost:5432/vd
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver

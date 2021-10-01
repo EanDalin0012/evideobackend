@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.evideo.evideobackend.core.dao.DefaultAuthenticationProviderDao">
 
-    <resultMap type="com.fasterxml.jackson.databind.JsonNode" id="user">
+    <resultMap type="JsonObject" id="user">
         <id property="id" column="id"/>
         <result property="username" column="user_name"/>
         <result property="password" column="password"/>
@@ -18,7 +18,7 @@
         <result property="name" column="authority_name"/>
     </resultMap>
 
-    <resultMap type="com.fasterxml.jackson.databind.JsonNode" id="authenticated">
+    <resultMap type="JsonObject" id="authenticated">
         <id property="id" column="id"/>
         <result property="username" column="user_name"/>
         <result property="password" column="password"/>
@@ -29,7 +29,7 @@
         <association property="authorities" resultMap="authority" javaType="list"/>
     </resultMap>
 
-    <resultMap type="com.fasterxml.jackson.databind.JsonNode" id="authenticateAuthority">
+    <resultMap type="JsonObject" id="authenticateAuthority">
         <id property="id" column="authority_id"/>
         <result property="name" column="authority_name"/>
     </resultMap>
@@ -53,7 +53,7 @@
 	   ]]>
     </select>
 
-    <select id="getUserByName" resultMap="JsonObject">
+    <select id="getUserByName" resultMap="user">
         <![CDATA[
 			SELECT
 				 u.id

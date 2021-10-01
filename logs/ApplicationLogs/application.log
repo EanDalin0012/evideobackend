@@ -1,0 +1,151 @@
+ INFO 2021-10-01 18:03:59 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:04:01 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:04:19 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:04:24 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:05:04 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:05:04 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:08:07 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:08:07 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:09:23 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:09:28 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:12:10 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:12:10 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:12:48 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:13:14 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:13:21 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:13:28 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:15:24 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:15:30 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:20:06 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:20:15 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:21:27 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:21:31 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:23:27 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:23:27 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:27:30 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:27:30 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:28:46 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:28:46 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:37:24 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:37:24 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:37:24 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:41:08 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:41:08 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:41:08 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:46:13 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:46:13 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:46:13 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:46:40 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:46:40 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:46:40 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:48:08 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:48:08 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:48:08 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:48:44 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:48:44 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:48:44 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:49:18 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:49:18 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:49:18 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:50:51 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:50:51 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:50:51 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:51:23 (VideoUnSecurRest.java:75) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:51:23 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:51:23 (VideoUnSecurRest.java:88) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:56:07 (VideoUnSecurRest.java:70) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:56:07 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:56:07 (VideoUnSecurRest.java:83) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:56:41 (VideoUnSecurRest.java:70) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:56:41 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:56:41 (VideoUnSecurRest.java:83) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:56:42 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 18:56:42 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 18:56:42 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 18:56:42 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 18:56:42 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 18:56:42 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 18:56:42 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 18:56:42 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 18:56:42 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 18:56:48 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 18:56:48 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 18:56:48 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 18:57:39 (VideoUnSecurRest.java:70) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 18:57:39 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 18:57:39 (VideoUnSecurRest.java:83) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 18:57:39 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 18:57:39 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 18:57:39 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 18:57:39 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 18:57:39 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 18:57:39 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 18:57:39 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 18:57:39 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 18:57:39 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 18:57:47 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 18:57:47 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 18:57:47 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 18:58:05 (VideoUnSecurRest.java:42) - Resource Video Id :2
+ INFO 2021-10-01 18:58:05 (VideoSourceServiceImplement.java:22) - vd id :2
+ INFO 2021-10-01 18:58:05 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #02 Authentication & Authorization.mp4
+ INFO 2021-10-01 18:58:06 (VideoUnSecurRest.java:42) - Resource Video Id :2
+ INFO 2021-10-01 18:58:06 (VideoSourceServiceImplement.java:22) - vd id :2
+ INFO 2021-10-01 18:58:06 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #02 Authentication & Authorization.mp4
+ INFO 2021-10-01 18:58:06 (VideoUnSecurRest.java:42) - Resource Video Id :2
+ INFO 2021-10-01 18:58:06 (VideoSourceServiceImplement.java:22) - vd id :2
+ INFO 2021-10-01 18:58:06 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #02 Authentication & Authorization.mp4
+ INFO 2021-10-01 18:58:08 (VideoUnSecurRest.java:42) - Resource Video Id :2
+ INFO 2021-10-01 18:58:08 (VideoSourceServiceImplement.java:22) - vd id :2
+ INFO 2021-10-01 18:58:08 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #02 Authentication & Authorization.mp4
+ INFO 2021-10-01 18:58:17 (VideoUnSecurRest.java:42) - Resource Video Id :3
+ INFO 2021-10-01 18:58:17 (VideoSourceServiceImplement.java:22) - vd id :3
+ INFO 2021-10-01 18:58:17 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #03 Authorities and Roles.mp4
+ INFO 2021-10-01 18:58:17 (VideoUnSecurRest.java:42) - Resource Video Id :3
+ INFO 2021-10-01 18:58:17 (VideoSourceServiceImplement.java:22) - vd id :3
+ INFO 2021-10-01 18:58:17 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #03 Authorities and Roles.mp4
+ INFO 2021-10-01 18:58:17 (VideoUnSecurRest.java:42) - Resource Video Id :3
+ INFO 2021-10-01 18:58:17 (VideoSourceServiceImplement.java:22) - vd id :3
+ INFO 2021-10-01 18:58:17 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #03 Authorities and Roles.mp4
+ INFO 2021-10-01 18:58:17 (VideoUnSecurRest.java:42) - Resource Video Id :3
+ INFO 2021-10-01 18:58:17 (VideoSourceServiceImplement.java:22) - vd id :3
+ INFO 2021-10-01 18:58:17 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #03 Authorities and Roles.mp4
+ INFO 2021-10-01 18:58:23 (VideoUnSecurRest.java:42) - Resource Video Id :3
+ INFO 2021-10-01 18:58:23 (VideoSourceServiceImplement.java:22) - vd id :3
+ INFO 2021-10-01 18:58:23 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #03 Authorities and Roles.mp4
+ INFO 2021-10-01 18:59:52 (VideoUnSecurRest.java:42) - Resource Video Id :4
+ INFO 2021-10-01 18:59:52 (VideoSourceServiceImplement.java:22) - vd id :4
+ INFO 2021-10-01 18:59:52 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #04 HTTP Basic Authentication.mp4
+ INFO 2021-10-01 18:59:53 (VideoUnSecurRest.java:42) - Resource Video Id :4
+ INFO 2021-10-01 18:59:53 (VideoSourceServiceImplement.java:22) - vd id :4
+ INFO 2021-10-01 18:59:53 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #04 HTTP Basic Authentication.mp4
+ INFO 2021-10-01 18:59:53 (VideoUnSecurRest.java:42) - Resource Video Id :4
+ INFO 2021-10-01 18:59:53 (VideoSourceServiceImplement.java:22) - vd id :4
+ INFO 2021-10-01 18:59:53 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #04 HTTP Basic Authentication.mp4
+ INFO 2021-10-01 18:59:53 (VideoUnSecurRest.java:42) - Resource Video Id :4
+ INFO 2021-10-01 18:59:53 (VideoSourceServiceImplement.java:22) - vd id :4
+ INFO 2021-10-01 18:59:53 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #04 HTTP Basic Authentication.mp4
+ INFO 2021-10-01 18:59:59 (VideoUnSecurRest.java:42) - Resource Video Id :4
+ INFO 2021-10-01 18:59:59 (VideoSourceServiceImplement.java:22) - vd id :4
+ INFO 2021-10-01 18:59:59 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #04 HTTP Basic Authentication.mp4
+ INFO 2021-10-01 19:01:41 (VideoUnSecurRest.java:70) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 19:01:41 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 19:01:41 (VideoUnSecurRest.java:83) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 19:01:41 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 19:01:41 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 19:01:41 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 19:01:41 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 19:01:41 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 19:01:41 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 19:01:41 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 19:01:41 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 19:01:41 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 19:01:57 (VideoUnSecurRest.java:70) - Client Request Data :{"vdId":1}
+ INFO 2021-10-01 19:01:57 (VideoSourceServiceImplement.java:34) - vd id :1
+ INFO 2021-10-01 19:01:57 (VideoUnSecurRest.java:83) - Response to client data : {"result":{"responseCode":"200","responseMessage":"Success"},"body":[{"id":1,"title":"Boot Security","vdId":1,"part":1,"isEnd":"N","createOn":"20211001 12:12"},{"id":2,"title":"Boot Security","vdId":1,"part":2,"isEnd":"N","createOn":"20211001 12:12"},{"id":3,"title":"Boot Security","vdId":1,"part":3,"isEnd":"N","createOn":"20211001 12:12"},{"id":4,"title":"Boot Security","vdId":1,"part":4,"isEnd":"N","createOn":"20211001 12:12"},{"id":5,"title":"Boot Security","vdId":1,"part":5,"isEnd":"N","createOn":"20211001 12:12"}]}
+ INFO 2021-10-01 19:02:31 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 19:02:31 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 19:02:31 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
+ INFO 2021-10-01 19:02:49 (VideoUnSecurRest.java:42) - Resource Video Id :1
+ INFO 2021-10-01 19:02:49 (VideoSourceServiceImplement.java:22) - vd id :1
+ INFO 2021-10-01 19:02:49 (VideoUnSecurRest.java:47) - Full Path :G:\my-vd\\Spring Boot Security\\[Spring Boot Security] #01 Course Overview.mp4
