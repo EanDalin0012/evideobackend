@@ -1,11 +1,13 @@
 package com.evideo.evideobackend.core.provider;
 
+import com.evideo.evideobackend.core.constant.DemoProperties;
 import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.encryption.EncryptionUtil;
 import com.evideo.evideobackend.core.service.implement.DefaultAuthenticationProviderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -16,7 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 import org.springframework.stereotype.Component;
 import org.springframework.core.env.Environment;
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ import java.util.Map;
 @Component
 public class DefaultAuthenticationProvider implements AuthenticationProvider {
     static Logger log = Logger.getLogger(DefaultAuthenticationProvider.class.getName());
-    @Inject
+    @Autowired
     private Environment env;
     final DefaultAuthenticationProviderService userService;
 
@@ -39,8 +40,8 @@ public class DefaultAuthenticationProvider implements AuthenticationProvider {
 
         try {
             log.info("============== Authentication Data :"+objectMapper.writeValueAsString(authentication));
-
-            String encodedBase64Key = EncryptionUtil.encodeKey(this.env.getProperty("security.key"));
+//            String k = this.env.getProperty("security.key");
+            String encodedBase64Key = EncryptionUtil.encodeKey(DemoProperties.secretKey);
             String userName         = EncryptionUtil.decrypt(authentication.getName(), encodedBase64Key);
             String password         = EncryptionUtil.decrypt((String) authentication.getCredentials(), encodedBase64Key);
             Map<String, String> data = (Map<String, String>) authentication.getDetails();
