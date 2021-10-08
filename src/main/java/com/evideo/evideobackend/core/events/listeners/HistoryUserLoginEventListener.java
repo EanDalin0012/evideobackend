@@ -1,6 +1,7 @@
 package com.evideo.evideobackend.core.events.listeners;
 
 import com.evideo.evideobackend.core.dto.JsonObject;
+import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.events.HistoryUserLoginEvent;
 import com.evideo.evideobackend.core.exception.ValidatorException;
 import com.evideo.evideobackend.core.service.implement.DeviceInfoService;
@@ -40,7 +41,7 @@ public class HistoryUserLoginEventListener implements ApplicationListener<Histor
             input.setString("date", deviceInfo.getString("date"));
             log.info("device info:"+objectMapper.writeValueAsString(input));
 
-            JsonObject jsonObjectArray = this.deviceInfoService.inquiryByUserAgent(input);
+            JsonObjectArray jsonObjectArray = this.deviceInfoService.inquiryByUserAgent(input);
             int size = jsonObjectArray.size();
             if(size > 1) {
                 deviceInfoService.deleteDeviceInfo(input);

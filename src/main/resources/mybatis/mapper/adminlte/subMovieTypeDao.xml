@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.evideo.evideobackend.adminlte.dao.SubMovieTypeDao">
+
+
+    <select id="read" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+                id
+                , vd_sub_type       as "name"
+                , remark
+            FROM vd_sub_type
+            where status != #{status}
+            order by id DESC;
+	     ]]>
+    </select>
+
+    <insert id="create">
+        <![CDATA[
+		  	INSERT INTO vd_sub_type
+            (
+                id
+                , vd_sub_type
+                , remark
+                , create_at
+                , create_by
+                , status
+            )
+            VALUES(
+                #{id}
+                , #{vdSubType}
+                , #{remark}
+                , #{createAt}
+                , #{userId}
+                , #{status}
+            );
+
+	     ]]>
+    </insert>
+
+    <update id="update">
+        <![CDATA[
+            UPDATE vd_sub_type
+            SET
+                vd_sub_type  = #{vdSubType}
+                , remark    = #{remark}
+                , modify_at = #{modifyAt}
+                , modify_by = #{userId}
+                , status    = #{status}
+            WHERE id        = #{id};
+    	]]>
+    </update>
+
+    <update id="delete">
+        <![CDATA[
+            UPDATE vd_sub_type
+            SET
+                status      = ${status}
+                , modify_at = #{modifyAt}
+                , modify_by = #{userId}
+            WHERE id        = #{id};
+
+    	]]>
+    </update>
+
+    <select id="count" resultType="java.lang.Integer">
+        <![CDATA[
+		  SELECT
+	     	COUNT (*)
+	      FROM vd_sub_type
+	     ]]>
+    </select>
+
+
+</mapper>

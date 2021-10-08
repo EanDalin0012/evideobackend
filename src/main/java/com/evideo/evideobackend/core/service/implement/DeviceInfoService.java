@@ -2,6 +2,7 @@ package com.evideo.evideobackend.core.service.implement;
 
 import com.evideo.evideobackend.core.dao.DeviceInfoDao;
 import com.evideo.evideobackend.core.dto.JsonObject;
+import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.exception.ValidatorException;
 import com.evideo.evideobackend.core.service.DeviceInfoInterface;
 import com.evideo.evideobackend.core.util.ValidatorUtil;
@@ -30,7 +31,7 @@ public class DeviceInfoService implements DeviceInfoInterface {
     }
 
     @Override
-    public JsonObject inquiryByUserAgent(JsonObject param) throws ValidatorException {
+    public JsonObjectArray inquiryByUserAgent(JsonObject param) throws ValidatorException {
         ValidatorUtil.validate(param, "userName", "userAgent");
         return this.deviceInfoDao.inquiryByUserAgent(param);
     }
