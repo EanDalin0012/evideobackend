@@ -65,9 +65,7 @@
 
     <select id="count" resultType="java.lang.Integer">
         <![CDATA[
-		  SELECT
-	     	COUNT (*)
-	      FROM vd_sub_type
+		 select max(id) from vd_sub_type
 	     ]]>
     </select>
 

@@ -7,7 +7,6 @@ import com.evideo.evideobackend.core.encryption.EncryptionUtil;
 import com.evideo.evideobackend.core.service.implement.DefaultAuthenticationProviderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -15,9 +14,9 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.common.exceptions.ClientAuthenticationException;
 import org.springframework.security.oauth2.common.exceptions.UnauthorizedClientException;
 import org.springframework.stereotype.Component;
-import org.springframework.core.env.Environment;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +24,7 @@ import java.util.Map;
 @Component
 public class DefaultAuthenticationProvider implements AuthenticationProvider {
     static Logger log = Logger.getLogger(DefaultAuthenticationProvider.class.getName());
-    @Autowired
-    private Environment env;
+
     final DefaultAuthenticationProviderService userService;
 
     public DefaultAuthenticationProvider(DefaultAuthenticationProviderService userService) {
@@ -62,23 +60,23 @@ public class DefaultAuthenticationProvider implements AuthenticationProvider {
 
             if (userInfo == null) {
                 log.info("============== Authorization User Not Found ===============");
-                throw new UnauthorizedClientException("UserNameNotFound");
+                throw new UnauthorizedClientException("userNotFound");
             }
             if (userInfo.getBoolean("accountLocked")) {
                 log.info("============== User Account Locked ===============");
-                throw new UnauthorizedClientException("UserLocked");
+                throw new UnauthorizedClientException("accountLocked");
             }
             if (!userInfo.getBoolean("enabled")) {
                 log.info("============== User Enabled False ===============");
-                throw new UnauthorizedClientException("UserDisabled");
+                throw new UnauthorizedClientException("userDisabled");
             }
             if (userInfo.getBoolean("accountExpired")) {
                 log.info("============== User Account Expired ===============");
-                throw new UnauthorizedClientException("UserExpired");
+                throw new UnauthorizedClientException("userExpired");
             }
             if (userInfo.getBoolean("credentialsExpired")) {
                 log.info("============== User Account Credentials Expired ===============>>>>>>>>>>>>");
-                throw new UnauthorizedClientException("UserExpired");
+                throw new UnauthorizedClientException("userExpired");
             }
 
             BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -87,7 +85,7 @@ public class DefaultAuthenticationProvider implements AuthenticationProvider {
             boolean isPasswordMatch = passwordEncoder.matches(password, _password);
             System.out.println(isPasswordMatch);
             if (!isPasswordMatch) {
-                throw new UnauthorizedClientException("InvalidPassword");
+                throw new UnauthorizedClientException("invalidPassword");
             }
 
             List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
@@ -114,17 +112,22 @@ public class DefaultAuthenticationProvider implements AuthenticationProvider {
 
         } catch (UnauthorizedClientException ex) {
             log.info("============== Get error user name not found exception ===============" + ex);
-//            throw new ClientAuthenticationException(ex.getMessage(), ex.getCause()) {
-//                @Override
-//                public String getOAuth2ErrorCode() {
-//                    return "400";
-//                }
-//            };
-            throw ex;
+            throw new ClientAuthenticationException(ex.getMessage(), ex.getCause()) {
+                @Override
+                public String getOAuth2ErrorCode() {
+                    return "404";
+                }
+            };
         } catch (Exception e) {
             log.error("*** get error class default authentication exception", e);
+            log.info("============== Get error user name not found exception ===============" + e);
+            throw new ClientAuthenticationException(e.getMessage(), e.getCause()) {
+                @Override
+                public String getOAuth2ErrorCode() {
+                    return "404";
+                }
+            };
         }
-        return null;
     }
 
     @Override

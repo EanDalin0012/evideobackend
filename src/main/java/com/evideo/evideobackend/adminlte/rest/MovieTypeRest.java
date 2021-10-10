@@ -1,5 +1,6 @@
 package com.evideo.evideobackend.adminlte.rest;
 
+import com.evideo.evideobackend.adminlte.common.SettingClientStatus;
 import com.evideo.evideobackend.adminlte.service.implement.MovieTypeServiceImplement;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.Status;
@@ -51,6 +52,7 @@ public class MovieTypeRest {
                 jsonObject.setString("createAt", localDate);
                 jsonObject.setString("status", Status.active);
                 jsonObject.setInt("userId", userId);
+                jsonObject.setString("settingClient", SettingClientStatus.N);
                 int save = this.movieTypeService.create(jsonObject);
                 if (save > 0) {
                     responseData.setResult(header);
@@ -166,6 +168,51 @@ public class MovieTypeRest {
             header.setResponseMessage(StatusCode.exception);
         }
         responseData.setResult(header);
+        return responseData;
+    }
+
+    @PostMapping(value = "/v0/updateStatusYN")
+    public ResponseData<JsonObject> updateStatusYN(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ResponseData responseData = new ResponseData();
+        Header header = new Header(StatusCode.success, MessageCode.success);
+
+        try {
+            log.info("Data from http client :"+objectMapper.writeValueAsString(jsonNode));
+            int id = jsonNode.get("id").asInt();
+            String status = jsonNode.get("status").asText();
+            if (status ==null || status.equals("")) {
+                header.setResponseMessage("invalidStatus");
+                header.setResponseCode(StatusCode.notFound);
+                responseData.setResult(header);
+                return responseData;
+            }
+            if ( id > 0) {
+                String localDate = CurrentDateUtil.get();
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.setInt("id", id);
+                jsonObject.setInt("userId", userId);
+                jsonObject.setString("settingClient", status);
+                jsonObject.setString("modifyAt", localDate);
+                int update = this.movieTypeService.updateStatusYN(jsonObject);
+                if (update > 0) {
+                    responseData.setResult(header);
+                    responseData.setBody(header);
+                    log.info("updateStatusYN Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
+                    return responseData;
+                }
+            } else {
+                header.setResponseCode(StatusCode.notFound);
+                header.setResponseMessage("Invalid_Vd_Id");
+            }
+
+        }catch (Exception | ValidatorException e) {
+            log.info("Exception Error delete :"+String.valueOf(e));
+            header.setResponseCode(StatusCode.exception);
+            header.setResponseMessage(StatusCode.exception);
+        }
+        responseData.setResult(header);
+        log.info("Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
 }

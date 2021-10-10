@@ -1,6 +1,10 @@
 package com.evideo.evideobackend.core.service.implement;
 
+import com.evideo.evideobackend.core.constant.Status;
+import com.evideo.evideobackend.core.dto.JsonObject;
+import com.evideo.evideobackend.core.exception.ValidatorException;
 import com.evideo.evideobackend.core.service.WriteFileService;
+import com.evideo.evideobackend.core.util.CurrentDateUtil;
 import org.apache.log4j.Logger;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
@@ -16,18 +20,23 @@ public class WriteFileServiceImplement implements WriteFileService {
 
     @Inject
     private Environment env;
+    final FileServiceImplement fileService;
+
+    WriteFileServiceImplement(FileServiceImplement fileService) {
+        this.fileService = fileService;
+    }
 
     @Override
-    public int writeFile(String fileName, String base64) {
+    public int writeFile(int userId, String fileName, String extension, String fullPath, String base64) {
         try {
             UUID uuid = UUID.randomUUID();
-            String[] strings = base64.split(",");
-            String arr[] = strings[0].split("/");
-            String arr1[] = arr[1].split(";");
-            String extension = arr1[0];
-            String path = "/uploads/images/";
-            String mkdir = env.getProperty("vd.path") +"/"+ path;
             String sourceName = uuid + "-"+fileName;
+            String path = fullPath + sourceName + "."+extension;
+
+            String[] strings = base64.split(",");
+            String mkdir = env.getProperty("vd.path") +"/"+fullPath;
+            log.info("WriteFileService writeFile mkdir:"+mkdir);
+
             File f = new File(mkdir);
             if (!f.exists()) {
                 log.info("path exits");
@@ -39,7 +48,24 @@ public class WriteFileServiceImplement implements WriteFileService {
             fout.write(data);
             fout.close();
 
-        }catch (Exception e) {
+            int id = this.fileService.count();
+            String localDate = CurrentDateUtil.get();
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.setInt("id", id);
+            jsonObject.setInt("userId", userId);
+            jsonObject.setString("fileName", sourceName);
+            jsonObject.setString("fileExtension", extension);
+            jsonObject.setString("fileSource", path);
+            jsonObject.setString("status", Status.active);
+            jsonObject.setString("createAt", localDate);
+
+            int save = this.fileService.create(jsonObject);
+            if (save > 0) {
+                return id;
+            }
+
+        }catch (Exception | ValidatorException e) {
             e.printStackTrace();
         }
         return 0;

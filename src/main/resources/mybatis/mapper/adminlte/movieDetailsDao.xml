@@ -1,42 +1,52 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.evideo.evideobackend.adminlte.dao.MovieTypeDao">
+<mapper namespace="com.evideo.evideobackend.adminlte.dao.MovieDetailsDao">
 
 
     <select id="read" resultType="JsonObject">
         <![CDATA[
             SELECT
                 id
-                , vd_type       as "name"
-                , remark
-                , setting_client    as "status"
-            FROM vd_type
-            where status != #{status}
+                , vd_id         as "vdId"
+                , vd_type_id    as "vdTypeId"
+                , status
+            FROM vd_dt
+            where vd_id = #{vdId}
             order by id DESC;
+	     ]]>
+    </select>
+
+    <select id="inquiry" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+                id
+                , vd_id         as "vdId"
+                , vd_type_id    as "vdTypeId"
+                , status
+            FROM vd_dt
+            where vd_id = #{vdTypeId} and vd_type_id = #{subVdTypeId}
 	     ]]>
     </select>
 
     <insert id="create">
         <![CDATA[
-		  	INSERT INTO vd_type
+		  	INSERT INTO vd_dt
                 (
                     id
-                    , vd_type
-                    , remark
+                    , vd_id
+                    , vd_type_id
+                    , status
                     , create_at
                     , create_by
-                    , status
-                    , setting_client
                 )
-                VALUES(
-                    #{id}
-                    , #{vdType}
-                    , #{remark}
-                    , #{createAt}
-                    , #{userId}
-                    , #{status}
-                    , #{settingClient}
-                );
+            VALUES(
+                #{id}
+                , #{vdTypeId}
+                , #{subVdTypeId}
+                , #{status}
+                , #{createAt}
+                , #{userId}
+            );
 	     ]]>
     </insert>
 
@@ -78,7 +88,7 @@
 
     <select id="count" resultType="java.lang.Integer">
         <![CDATA[
-		  select max(id) from vd_type
+		  select max(id) from vd_dt
 	     ]]>
     </select>
 

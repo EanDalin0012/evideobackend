@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.evideo.evideobackend.core.dao.FileDao">
+
+    <select id="read" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+                id
+                , file_name         as "fileName"
+                , file_extension    as "fileExtension"
+                , file_source       as "fileSource"
+                , status
+            FROM resource
+            where id = #{id}
+            order by id DESC;
+	     ]]>
+    </select>
+
+    <insert id="create">
+        <![CDATA[
+		  	INSERT INTO resource
+            (
+                id
+                , file_name
+                , file_extension
+                , file_source
+                , status
+                , create_by
+                , create_at
+            )
+            VALUES
+            (
+                #{id}
+                , #{fileName}
+                , #{fileExtension}
+                , #{fileSource}
+                , #{status}
+                , #{userId}
+                , #{createAt}
+            );
+	     ]]>
+    </insert>
+
+    <select id="count" resultType="java.lang.Integer">
+        <![CDATA[
+		  select max(id) from resource
+	     ]]>
+    </select>
+
+</mapper>
