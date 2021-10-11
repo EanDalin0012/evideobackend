@@ -2,6 +2,7 @@ package com.evideo.evideobackend.adminlte.rest;
 
 import com.evideo.evideobackend.adminlte.common.SettingClientStatus;
 import com.evideo.evideobackend.adminlte.service.implement.MovieTypeServiceImplement;
+import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.Status;
 import com.evideo.evideobackend.core.constant.StatusCode;
@@ -15,15 +16,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/movie-type")
 public class MovieTypeRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
+    private static String key;
 
     final MovieTypeServiceImplement movieTypeService;
     MovieTypeRest(MovieTypeServiceImplement movieTypeService) {
+        key = GenerateRandomPassword.generateRandomPassword(25)+"::";
         this.movieTypeService = movieTypeService;
     }
 
@@ -34,7 +38,7 @@ public class MovieTypeRest {
         ResponseData responseData = new ResponseData();
         Header header = new Header(StatusCode.success, MessageCode.success);
         try {
-            log.info("Movie Type Rest Client Request Data : "+objectMapper.writeValueAsString(jsonNode));
+            log.info(key+"Movie Type Rest Client Request Data : "+objectMapper.writeValueAsString(jsonNode));
 
             int id = this.movieTypeService.count();
             String name = jsonNode.get("name").asText();
@@ -57,26 +61,26 @@ public class MovieTypeRest {
                 if (save > 0) {
                     responseData.setResult(header);
                     responseData.setBody(header);
-                    log.info("Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
+                    log.info(key+"Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }
             }
             header.setResponseCode(StatusCode.notFound);
             header.setResponseMessage(MessageCode.exception);
         }catch (Exception | ValidatorException e) {
-            log.info("Exception :"+String.valueOf(e));
+            log.info(key+"Exception :"+String.valueOf(e));
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
             responseData.setResult(header);
         }
-        log.info("Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
+        log.info(key+"Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
 
     @GetMapping(value = "/v0/read")
     public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-
+        log.info(key+"Async Thread.sleep(10000);");
         ResponseData responseData = new ResponseData();
         Header header = new Header(StatusCode.success, MessageCode.success);
         try {
@@ -91,7 +95,8 @@ public class MovieTypeRest {
             header.setResponseMessage(StatusCode.exception);
             responseData.setResult(header);
         }
-        log.info("Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
+
+        log.info(key+"Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
 
@@ -102,7 +107,7 @@ public class MovieTypeRest {
         Header header = new Header(StatusCode.success, MessageCode.success);
 
         try {
-            log.info("Data from http client :"+objectMapper.writeValueAsString(jsonNode));
+            log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
             int id = jsonNode.get("id").asInt();
             if ( id > 0) {
                 String localDate = CurrentDateUtil.get();
@@ -115,7 +120,7 @@ public class MovieTypeRest {
                 if (update > 0) {
                     responseData.setResult(header);
                     responseData.setBody(header);
-                    log.info("Delete Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
+                    log.info(key+"Delete Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }
             } else {
@@ -124,12 +129,12 @@ public class MovieTypeRest {
             }
 
         }catch (Exception | ValidatorException e) {
-            log.info("Exception Error delete :"+String.valueOf(e));
+            log.info(key+"Exception Error delete :"+String.valueOf(e));
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }
         responseData.setResult(header);
-        log.info("Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
+        log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
 
@@ -139,7 +144,7 @@ public class MovieTypeRest {
         ResponseData responseData = new ResponseData();
         Header header = new Header(StatusCode.success, MessageCode.success);
         try {
-            log.info("Data from http client :"+objectMapper.writeValueAsString(jsonNode));
+            log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
             int id = jsonNode.get("id").asInt();
             String name = jsonNode.get("name").asText();
             String remark = jsonNode.get("remark").asText();

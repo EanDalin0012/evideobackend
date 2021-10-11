@@ -14,7 +14,7 @@
                 , vd.vd_type_id		as "vdTypeId"
                 , vd.vd_sub_type_id as "vdSubTypeId"
                 , vt.vd_type 		as "vdTypeName"
-                , vst.vd_sub_type 	as "vdSubTypeIdName"
+                , vst.vd_sub_type 	as "vdSubTypeName"
             FROM vd as vd
             inner join vd_type vt on vt.id = vd.vd_type_id
             inner join vd_sub_type vst on vst.id  = vd.vd_sub_type_id
@@ -55,31 +55,23 @@
 
     <update id="update">
         <![CDATA[
-            UPDATE vd_type
+            UPDATE vd
             SET
-                vd_type     = #{vdType}
-                , remark    = #{remark}
-                , modify_at = #{modifyAt}
-                , modify_by = #{userId}
-                , status    = #{status}
-            WHERE id        = #{id};
-    	]]>
-    </update>
-
-    <update id="updateStatusYN">
-        <![CDATA[
-            UPDATE vd_type
-            SET
-                setting_client  = #{settingClient}
+                vd_name         = #{vdName}
+                , resource_id   = #{resourceId}
+                , remark        = #{remark}
                 , modify_at     = #{modifyAt}
                 , modify_by     = #{userId}
-            WHERE id            = #{id};
+                , status        = #{status}
+                , vd_type_id    = #{vdId}
+                , vd_sub_type_id = #{subVdTypeId}
+            WHERE id= #{id};
     	]]>
     </update>
 
     <update id="delete">
         <![CDATA[
-            UPDATE vd_type
+            UPDATE vd
             SET
                 status      = ${status}
                 , modify_at = #{modifyAt}
