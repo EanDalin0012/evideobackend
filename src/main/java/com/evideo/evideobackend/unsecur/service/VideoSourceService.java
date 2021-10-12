@@ -6,5 +6,6 @@ import com.evideo.evideobackend.core.exception.ValidatorException;
 
 public interface VideoSourceService {
     JsonObject inquiryVideoSource(int id) throws ValidatorException;
+    JsonObject inquirySourceVideo(JsonObject jsonObject) throws ValidatorException;
     JsonObjectArray inquiryVideoSourceByVDId(int vdId) throws ValidatorException;
 }

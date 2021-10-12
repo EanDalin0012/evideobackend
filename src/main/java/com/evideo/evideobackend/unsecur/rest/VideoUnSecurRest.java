@@ -42,15 +42,17 @@ public class VideoUnSecurRest {
         log.info("Resource Video Id :"+id);
         String sourcePath = this.env.getProperty("vd.path");
         try {
-            JsonObject jsonObject = this.videoSourceServiceImplement.inquiryVideoSource(id);
-            String fullPath = sourcePath + jsonObject.getString("sourcePath");
+            JsonObject input = new JsonObject();
+            input.setInt("id", id);
+            JsonObject jsonObject = this.videoSourceServiceImplement.inquirySourceVideo(input);
+            String fullPath = sourcePath + jsonObject.getString("fileSource");
             log.info("Full Path :"+fullPath);
             File file = new File(fullPath);
             InputStream inputStream = new FileInputStream(file);
             HttpHeaders headers = new HttpHeaders();
             headers.add("Accept-Ranges", "bytes");
             headers.add("Content-Type", "video/mp4");
-            headers.add("Content-Range", "bytes 50-102517839845");
+            headers.add("Content-Range", "bytes 99-102517839845");
             headers.add("Content-Length", String.valueOf(file.length()));
             return new ResponseEntity(new InputStreamResource(inputStream), headers, HttpStatus.OK);
         }catch (Exception | ValidatorException e) {

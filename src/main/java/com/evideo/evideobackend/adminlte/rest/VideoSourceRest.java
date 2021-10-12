@@ -54,6 +54,38 @@ public class VideoSourceRest {
         return responseData;
     }
 
+    @PostMapping(value = "/v0/inquiry")
+    public ResponseData<JsonObject> inquiry(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ResponseData responseData = new ResponseData();
+        Header header = new Header(StatusCode.success, MessageCode.success);
+        try {
+            int vdId = jsonNode.get("vdId").asInt();
+
+            if (vdId <=0 ) {
+                header.setResponseCode(StatusCode.notFound);
+                header.setResponseMessage("invalidVdId");
+                responseData.setResult(header);
+                return  responseData;
+            }
+
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.setString("status", Status.delete);
+            jsonObject.setInt("vdId", vdId);
+            JsonObjectArray restData = this.videoSourceLTEService.inquiryByVdId(jsonObject);
+            responseData.setResult(header);
+            responseData.setBody(restData);
+        }catch (Exception | ValidatorException e) {
+            log.info("Exception :"+e.getMessage());
+            header.setResponseCode(StatusCode.exception);
+            header.setResponseMessage(StatusCode.exception);
+            responseData.setResult(header);
+        }
+        log.info("Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
+        return responseData;
+    }
+
     @PostMapping(value = "/v0/create")
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
 

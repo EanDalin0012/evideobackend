@@ -50,4 +50,10 @@ public class VideoSourceLTEServiceImplement implements VideoSourceLTEService {
         ValidatorUtil.validate(jsonObject,  "vdId");
         return this.videoSourceLTEDao.inquiryPart(jsonObject) + 1;
     }
+
+    @Override
+    public JsonObjectArray inquiryByVdId(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject,  "vdId", "status");
+        return this.videoSourceLTEDao.inquiryByVdId(jsonObject);
+    }
 }

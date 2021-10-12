@@ -23,6 +23,26 @@
 	     ]]>
     </select>
 
+    <select id="inquiryByVdId" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+                id
+                , vd_id         as "vdId"
+                , part
+                , is_end        as "isEnd"
+                , source_vd_id  as "sourceVdId"
+                , create_at     as "createAt"
+                , create_by     as "createBy"
+                , schedule_enable   as "scheduleEnable"
+                , status
+                , schedule_yn       as "scheduleYN"
+            FROM vd_source
+            where status != #{status} and vd_id = #{vdId}
+            order by part DESC;
+
+	     ]]>
+    </select>
+
     <insert id="create">
         <![CDATA[
 		  	INSERT INTO public.vd_source

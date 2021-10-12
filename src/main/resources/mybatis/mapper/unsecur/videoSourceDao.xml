@@ -18,6 +18,23 @@
 	     ]]>
     </select>
 
+    <select id="inquirySourceVideo" resultType="JsonObject">
+        <![CDATA[
+           SELECT
+            id
+            , file_name         as "fileName"
+            , file_size         as "fileSize"
+            , file_extension    as "fileExtension"
+            , file_type         as "fileType"
+            , original_name     as "originalName"
+            , file_source       as "fileSource"
+            , status
+           FROM public.resource
+            where id = #{id};
+
+	     ]]>
+    </select>
+
     <select id="inquiryVideoSourceByVDId" resultType="JsonObject">
         <![CDATA[
             SELECT

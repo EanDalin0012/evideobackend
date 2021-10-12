@@ -3,6 +3,7 @@ package com.evideo.evideobackend.unsecur.service.implement;
 import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.exception.ValidatorException;
+import com.evideo.evideobackend.core.util.ValidatorUtil;
 import com.evideo.evideobackend.unsecur.dao.VideoSourceDao;
 import com.evideo.evideobackend.unsecur.service.VideoSourceService;
 import org.apache.log4j.Logger;
@@ -27,6 +28,12 @@ public class VideoSourceServiceImplement implements VideoSourceService {
         JsonObject jsonObject = new JsonObject();
         jsonObject.setInt("id", id);
         return this.videoSourceDao.inquiryVideoSource(jsonObject);
+    }
+
+    @Override
+    public JsonObject inquirySourceVideo(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject,  "id");
+        return this.videoSourceDao.inquirySourceVideo(jsonObject);
     }
 
     @Override
