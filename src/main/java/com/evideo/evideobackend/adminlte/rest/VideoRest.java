@@ -93,7 +93,7 @@ public class VideoRest {
                 }
             }
             String path = "/uploads/images/";
-            int sourceId = this.writeFileService.writeFile(userId,fileName, fileExtension, path, fileBits);
+            int sourceId = this.writeFileService.writeFile(userId,fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
 
             if (sourceId > 0 ) {
                 int id = this.videoService.count();
@@ -223,7 +223,7 @@ public class VideoRest {
                     }
                 }
                 String path = "/uploads/images/";
-                sourceId = this.writeFileService.writeFile(userId, fileName, fileExtension, path, fileBits);
+                sourceId = this.writeFileService.writeFile(userId, fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
             } else {
                 sourceId = jsonNode.get("sourceId").asInt();
             }

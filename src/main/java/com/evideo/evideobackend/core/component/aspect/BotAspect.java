@@ -17,6 +17,7 @@ public class BotAspect {
     static Logger log = Logger.getLogger(BotAspect.class.getName());
 
     @Pointcut("execution(* com.evideo.evideobackend.core.rest.UserRest.loadUserByUserName(..)))" )
+    // or @Pointcut("execution(* com.evideo.evideobackend.core.rest.UserRest..*(..))" )
     private void execute(){
         System.out.println("BotAspect Component execute");
     }

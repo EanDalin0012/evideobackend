@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.evideo.evideobackend.adminlte.dao.VideoSourceLTEDao">
+
+
+    <select id="read" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+                id
+                , vd_id         as "vdId"
+                , part
+                , is_end        as "isEnd"
+                , source_vd_id  as "sourceVdId"
+                , create_at     as "createAt"
+                , create_by     as "createBy"
+                , schedule_enable   as "scheduleEnable"
+                , status
+                , schedule_yn       as "scheduleYN"
+            FROM vd_source
+            where status != #{status}
+            order by part DESC;
+
+	     ]]>
+    </select>
+
+    <insert id="create">
+        <![CDATA[
+		  	INSERT INTO public.vd_source
+            (
+                id
+                , vd_id
+                , part
+                , is_end
+                , source_vd_id
+                , create_at
+                , create_by
+                , schedule_enable
+                , status
+                , schedule_yn
+            )
+            VALUES
+            (
+                #{id}
+                , #{vdId}
+                , #{part}
+                , #{isEnd}
+                , #{resourceId}
+                , #{createAt}
+                , #{userId}
+                , #{videoSourceOnSchedule}
+                , #{status}
+                , #{scheduleYN}
+            );
+
+	     ]]>
+    </insert>
+
+    <update id="update">
+        <![CDATA[
+            UPDATE vd
+            SET
+                vd_name         = #{vdName}
+                , resource_id   = #{resourceId}
+                , remark        = #{remark}
+                , modify_at     = #{modifyAt}
+                , modify_by     = #{userId}
+                , status        = #{status}
+                , vd_type_id    = #{vdId}
+                , vd_sub_type_id = #{subVdTypeId}
+            WHERE id= #{id};
+    	]]>
+    </update>
+
+    <update id="delete">
+        <![CDATA[
+            UPDATE vd
+            SET
+                status      = ${status}
+                , modify_at = #{modifyAt}
+                , modify_by = #{userId}
+            WHERE id        = #{id};
+
+    	]]>
+    </update>
+
+    <select id="count" resultType="java.lang.Integer">
+        <![CDATA[
+		  select coalesce(MAX(id), 0) FROM  vd_source;
+	     ]]>
+    </select>
+
+    <select id="inquiryPart" resultType="java.lang.Integer">
+        <![CDATA[
+		  select coalesce(MAX(part), 0) FROM  vd_source
+		  WHERE vd_id = #{vdId}
+	     ]]>
+    </select>
+
+</mapper>
