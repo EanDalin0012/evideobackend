@@ -11,8 +11,7 @@
                 , file_source       as "fileSource"
                 , status
             FROM resource
-            where id = #{id}
-            order by id DESC;
+            where id = #{id};
 	     ]]>
     </select>
 
@@ -46,5 +45,10 @@
 		  select max(id) from resource
 	     ]]>
     </select>
+
+    <delete id="delete">
+        DELETE from resource
+        WHERE id = #{id};
+    </delete>
 
 </mapper>

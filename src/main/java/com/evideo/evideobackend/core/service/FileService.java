@@ -7,4 +7,5 @@ public interface FileService {
     int create(JsonObject jsonObject) throws ValidatorException;
     JsonObject readBySourceId(JsonObject jsonObject) throws ValidatorException;
     int count();
+    int delete(JsonObject jsonObject) throws ValidatorException;
 }

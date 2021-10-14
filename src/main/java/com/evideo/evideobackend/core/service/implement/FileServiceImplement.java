@@ -24,11 +24,17 @@ public class FileServiceImplement implements FileService {
     @Override
     public JsonObject readBySourceId(JsonObject jsonObject) throws ValidatorException {
         ValidatorUtil.validate(jsonObject, "id");
-        return this.fileDao.readBySourceId(jsonObject);
+        return this.fileDao.read(jsonObject);
     }
 
     @Override
     public int count() {
         return this.fileDao.count() + 1;
+    }
+
+    @Override
+    public int delete(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject, "id");
+        return this.fileDao.delete(jsonObject);
     }
 }

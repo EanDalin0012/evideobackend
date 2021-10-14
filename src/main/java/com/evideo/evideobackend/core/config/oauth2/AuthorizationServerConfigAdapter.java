@@ -1,7 +1,7 @@
 package com.evideo.evideobackend.core.config.oauth2;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.evideo.evideobackend.unsecur.rest.VideoUnSecurRest;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 @EnableAuthorizationServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthorizationServerConfigAdapter extends AuthorizationServerConfigurerAdapter {
-    private static final Logger log = LoggerFactory.getLogger(AuthorizationServerConfigAdapter.class);
+    static org.apache.log4j.Logger log = Logger.getLogger(VideoUnSecurRest.class.getName());
 
     @Inject
     @Qualifier("dataSource")

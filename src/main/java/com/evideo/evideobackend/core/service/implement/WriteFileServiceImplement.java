@@ -70,4 +70,6 @@ public class WriteFileServiceImplement implements WriteFileService {
         }
         return 0;
     }
+
+
 }

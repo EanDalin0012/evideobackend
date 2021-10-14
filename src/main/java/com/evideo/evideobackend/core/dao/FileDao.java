@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface FileDao {
     int create(JsonObject jsonObject);
-    JsonObject readBySourceId(JsonObject jsonObject);
+    int delete(JsonObject jsonObject);
+    JsonObject read(JsonObject jsonObject);
     int count();
 }

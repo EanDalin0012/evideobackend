@@ -30,7 +30,7 @@ public class VideoSourceLTEServiceImplement implements VideoSourceLTEService {
 
     @Override
     public int update(JsonObject jsonObject) throws ValidatorException {
-        ValidatorUtil.validate(jsonObject, "id", "resourceId", "vdName","vdId","subVdTypeId", "status", "modifyAt", "userId");
+        ValidatorUtil.validate(jsonObject, "id", "scheduleYN", "isEnd", "resourceId", "vdId","part", "status", "modifyAt", "userId");
         return this.videoSourceLTEDao.update(jsonObject);
     }
 

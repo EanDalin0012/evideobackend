@@ -1,5 +1,6 @@
 package com.evideo.evideobackend.adminlte.rest;
 
+import com.evideo.evideobackend.adminlte.event.RemoveFileEvent;
 import com.evideo.evideobackend.adminlte.service.implement.VideoSourceLTEServiceImplement;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
@@ -16,13 +17,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
 
 @RestController
 @RequestMapping(value = "/api/videoSource")
 public class VideoSourceRest {
     static Logger log = Logger.getLogger(VideoSourceRest.class.getName());
     private String key;
+
+    @Inject
+    private ApplicationEventPublisher eventPublisher;
 
     final WriteFileServiceImplement writeFileService;
     final VideoSourceLTEServiceImplement videoSourceLTEService;
@@ -94,7 +101,7 @@ public class VideoSourceRest {
         Header header = new Header(StatusCode.success, MessageCode.success);
 
         try {
-            log.info(key + "Request Data from http Client :" + objectMapper.writeValueAsString(jsonNode));
+//            log.info(key + "Request Data from http Client :" + objectMapper.writeValueAsString(jsonNode));
 
             int vdId = jsonNode.get("vdId").asInt();
             String vdName = jsonNode.get("vdName").asText();
@@ -151,6 +158,7 @@ public class VideoSourceRest {
             }
 
             String path = "/uploads/video/"+vdName+"/";
+//            String t = fileName.replaceAll("\\s+","");
             int resourceId = this.writeFileService.writeFile(userId,fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
 
             String scheduleYN = "N";
@@ -193,6 +201,8 @@ public class VideoSourceRest {
         return responseData;
     }
 
+
+
     @PostMapping(value = "/v0/requestPart")
     public ResponseData<JsonObject> inquiryPart(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
 
@@ -216,6 +226,125 @@ public class VideoSourceRest {
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }
+        log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
+        return responseData;
+    }
+
+    @PostMapping(value = "/v0/update")
+    public ResponseData<JsonObject> update(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ResponseData responseData = new ResponseData();
+        Header header = new Header(StatusCode.success, MessageCode.success);
+
+        try {
+
+            int id = jsonNode.get("id").asInt();
+            int vdId = jsonNode.get("vdId").asInt();
+            String vdName = jsonNode.get("vdName").asText();
+            String remark = jsonNode.get("remark").asText();
+            String videoSourceOnSchedule = jsonNode.get("videoSourceOnSchedule").asText();
+            int videoSourcePart = jsonNode.get("videoSourcePart").asInt();
+            String isEnd = jsonNode.get("isEnd").asText();
+            JsonNode fileInf = jsonNode.get("fileInfo");
+            String fileBits = "";
+            String fileName = "";
+            String fileExtension = "";
+            boolean selectVd = jsonNode.get("selectVd").asBoolean();
+            int resourceId = jsonNode.get("sourceVdId").asInt();
+
+            if (vdId <= 0) {
+                header.setResponseCode(StatusCode.notFound);
+                header.setResponseMessage("invalidVdId");
+                responseData.setResult(header);
+                return responseData;
+            }  else if (vdName.equals("")) {
+                header.setResponseCode(StatusCode.notFound);
+                header.setResponseMessage("invalidVdName");
+                responseData.setResult(header);
+                return responseData;
+            } else if (videoSourcePart <= 0) {
+                header.setResponseCode(StatusCode.notFound);
+                header.setResponseMessage("invalidVideoSourcePart");
+                responseData.setResult(header);
+                return responseData;
+            }
+            if (selectVd == true) {
+                if (fileInf == null ) {
+                    header.setResponseCode(StatusCode.notFound);
+                    header.setResponseMessage("invalidFileImage");
+                    responseData.setResult(header);
+                    return responseData;
+                } else if (fileInf != null) {
+                    fileBits = fileInf.get("fileBits").asText();
+                    fileName = fileInf.get("fileName").asText();
+                    fileExtension = fileInf.get("fileExtension").asText();
+
+                    if (fileBits == null || fileBits.equals("")) {
+                        header.setResponseCode(StatusCode.notFound);
+                        header.setResponseMessage("invalidFileImage");
+                        responseData.setResult(header);
+                        return responseData;
+                    } else if (fileName.equals("")) {
+                        header.setResponseCode(StatusCode.notFound);
+                        header.setResponseMessage("invalidFileImage");
+                        responseData.setResult(header);
+                        return responseData;
+                    } else if (fileExtension.equals("")) {
+                        header.setResponseCode(StatusCode.notFound);
+                        header.setResponseMessage("invalidFileImage");
+                        responseData.setResult(header);
+                        return responseData;
+                    }
+                }
+
+                String path = "/uploads/video/"+vdName+"/";
+                resourceId = this.writeFileService.writeFile(userId,fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
+
+            }
+
+            String scheduleYN = "Y";
+            if (videoSourceOnSchedule.equals("")) {
+                scheduleYN = "N";
+            }
+
+            JsonObject jsonObject = new JsonObject();
+            String localDate = CurrentDateUtil.get();
+            jsonObject.setInt("id", id);
+            jsonObject.setInt("userId", userId);
+            jsonObject.setString("modifyAt", localDate);
+            jsonObject.setString("status", Status.modify);
+            jsonObject.setInt("vdId", vdId);
+            jsonObject.setInt("part", videoSourcePart);
+            jsonObject.setString("scheduleYN", scheduleYN);
+            jsonObject.setString("isEnd", isEnd);
+            jsonObject.setString("remark", remark);
+            jsonObject.setInt("resourceId", resourceId);
+            jsonObject.setString("videoSourceOnSchedule", videoSourceOnSchedule);
+
+            int update = this.videoSourceLTEService.update(jsonObject);
+            if (update > 0 ) {
+                responseData.setResult(header);
+                responseData.setBody(header);
+                log.info(key+"VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
+
+                if (selectVd == true) {
+                    JsonObject input = new JsonObject();
+                    input.setInt("id", jsonNode.get("sourceVdId").asInt());
+                    this.eventPublisher.publishEvent(new RemoveFileEvent(input));
+                }
+
+                return responseData;
+            }
+            header.setResponseCode(StatusCode.notFound);
+            header.setResponseMessage(MessageCode.exception);
+
+        }catch (Exception | ValidatorException e) {
+            log.info("Exception error :" + String.valueOf(e));
+            header.setResponseCode(StatusCode.exception);
+            header.setResponseMessage(StatusCode.exception);
+        }
+        responseData.setResult(header);
         log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
