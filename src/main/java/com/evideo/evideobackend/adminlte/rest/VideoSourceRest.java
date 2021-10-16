@@ -36,7 +36,7 @@ public class VideoSourceRest {
     VideoSourceRest(WriteFileServiceImplement writeFileService, VideoSourceLTEServiceImplement videoSourceLTEServiceImplement) {
         this.writeFileService = writeFileService;
         this.videoSourceLTEService = videoSourceLTEServiceImplement;
-        key = GenerateRandomPassword.generateRandomPassword(5);
+        key = GenerateRandomPassword.key();
     }
 
     @GetMapping(value = "/v0/read")
@@ -346,6 +346,40 @@ public class VideoSourceRest {
         }
         responseData.setResult(header);
         log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
+        return responseData;
+    }
+
+    @PostMapping(value = "/v0/delete")
+    public ResponseData<JsonObject> delete(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ResponseData responseData = new ResponseData();
+        Header header = new Header(StatusCode.success, MessageCode.success);
+        try {
+            log.info(key+"VideoRest delete Data from http client :"+objectMapper.writeValueAsString(jsonNode));
+            int id = jsonNode.get("id").asInt();
+            if ( id > 0) {
+                String localDate = CurrentDateUtil.get();
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.setInt("id", id);
+                jsonObject.setInt("userId", userId);
+                jsonObject.setString("status", Status.delete);
+                jsonObject.setString("modifyAt", localDate);
+                int update = this.videoSourceLTEService.delete(jsonObject);
+                if (update > 0) {
+                    responseData.setResult(header);
+                    responseData.setBody(header);
+                    log.info(key+"Delete Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
+                    return responseData;
+                }
+            }
+            header.setResponseCode(StatusCode.notFound);
+            header.setResponseMessage(MessageCode.exception);
+        }catch (Exception | ValidatorException e) {
+            log.info("Exception error :" + String.valueOf(e));
+            header.setResponseCode(StatusCode.exception);
+            header.setResponseMessage(StatusCode.exception);
+        }
+        log.info(key+"Response data to http client :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
 

@@ -99,7 +99,7 @@
 
     <update id="delete">
         <![CDATA[
-            UPDATE vd
+            UPDATE vd_source
             SET
                 status      = ${status}
                 , modify_at = #{modifyAt}

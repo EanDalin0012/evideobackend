@@ -1,20 +1,21 @@
 package com.evideo.evideobackend.adminlte.event.listener;
 
-import com.evideo.evideobackend.adminlte.event.RemoveFileEvent;
-import com.evideo.evideobackend.core.dto.JsonObject;
-import com.evideo.evideobackend.core.events.listeners.HistoryUserLoginEventListener;
-import com.evideo.evideobackend.core.exception.ValidatorException;
-import com.evideo.evideobackend.core.service.implement.FileServiceImplement;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.log4j.Logger;
-import org.springframework.context.ApplicationListener;
-import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
+        import com.evideo.evideobackend.adminlte.event.RemoveFileEvent;
+        import com.evideo.evideobackend.core.dto.JsonObject;
+        import com.evideo.evideobackend.core.events.listeners.HistoryUserLoginEventListener;
+        import com.evideo.evideobackend.core.exception.ValidatorException;
+        import com.evideo.evideobackend.core.service.implement.FileServiceImplement;
+        import com.fasterxml.jackson.databind.ObjectMapper;
+        import org.apache.log4j.Logger;
+        import org.springframework.context.ApplicationListener;
+        import org.springframework.core.env.Environment;
+        import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-import java.io.File;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+        import javax.inject.Inject;
+        import java.io.File;
+        import java.nio.file.Files;
+        import java.nio.file.Path;
+        import java.nio.file.Paths;
 
 @Component
 public class RemoveFileEventListener implements ApplicationListener<RemoveFileEvent> {
@@ -52,8 +53,9 @@ public class RemoveFileEventListener implements ApplicationListener<RemoveFileEv
                     log.info("RemoveFileEventListener Success:" + delete);
                     if (delete > 0) {
                         log.info("RemoveFileEventListener Success");
+                        Files.delete(Paths.get(filePath));
                     }
-                    file.delete();
+
                 }
 
             }

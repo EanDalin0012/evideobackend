@@ -1,5 +1,6 @@
 package com.evideo.evideobackend.adminlte.rest;
 
+import com.evideo.evideobackend.adminlte.event.RemoveFileEvent;
 import com.evideo.evideobackend.adminlte.service.implement.VideoServiceImplement;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
@@ -16,15 +17,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
+
+import javax.inject.Inject;
 
 
 @RestController
 @RequestMapping(value = "/api/video")
 public class VideoRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
-
     private String key;
+    @Inject
+    private ApplicationEventPublisher eventPublisher;
+
     final VideoServiceImplement videoService;
     final WriteFileServiceImplement writeFileService;
 
@@ -92,7 +98,7 @@ public class VideoRest {
                     return responseData;
                 }
             }
-            String path = "/uploads/images/";
+            String path = "/uploads/images/"+vdName+"/";
             int sourceId = this.writeFileService.writeFile(userId,fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
 
             if (sourceId > 0 ) {
@@ -123,7 +129,7 @@ public class VideoRest {
             header.setResponseMessage(MessageCode.exception);
 
         }catch (Exception | ValidatorException e) {
-            log.info("Exception error :" + String.valueOf(e));
+            log.info("Exception error :" + e.getMessage());
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
 
@@ -170,6 +176,8 @@ public class VideoRest {
             int subVdTypeId = jsonNode.get("subVdTypeId").asInt();
             String vdName = jsonNode.get("vdName").asText();
             String remark = jsonNode.get("remark").asText();
+            int resourceId = jsonNode.get("resourceId").asInt();
+            boolean isSelectedFile = jsonNode.get("isSelectedFile").asBoolean();
 
             if (vdId <= 0) {
                 header.setResponseCode(StatusCode.notFound);
@@ -181,17 +189,15 @@ public class VideoRest {
                 header.setResponseMessage("invalidSubVdTypeId");
                 responseData.setResult(header);
                 return responseData;
-            } else if (vdName == null || vdName.equals("")) {
+            } else if (vdName.equals("")) {
                 header.setResponseCode(StatusCode.notFound);
                 header.setResponseMessage("invalidVdName");
                 responseData.setResult(header);
                 return responseData;
             }
 
-            int sourceId = 0;
             String localDate = CurrentDateUtil.get();
             JsonObject jsonObject = new JsonObject();
-            boolean isSelectedFile = jsonNode.get("isSelectedFile").asBoolean();
 
             if (isSelectedFile) {
                 JsonNode fileInf = jsonNode.get("fileInfo");
@@ -205,34 +211,32 @@ public class VideoRest {
                     responseData.setResult(header);
                     return responseData;
                 } else if (fileInf != null) {
-                    if (fileBits == null || fileBits.equals("")) {
+                    if (fileBits.equals("")) {
                         header.setResponseCode(StatusCode.notFound);
                         header.setResponseMessage("invalidFileImage");
                         responseData.setResult(header);
                         return responseData;
-                    } else if (fileName == null || fileName.equals("")) {
+                    } else if (fileName.equals("")) {
                         header.setResponseCode(StatusCode.notFound);
                         header.setResponseMessage("invalidFileImage");
                         responseData.setResult(header);
                         return responseData;
-                    } else if (fileExtension == null || fileExtension.equals("")) {
+                    } else if ( fileExtension.equals("")) {
                         header.setResponseCode(StatusCode.notFound);
                         header.setResponseMessage("invalidFileImage");
                         responseData.setResult(header);
                         return responseData;
                     }
                 }
-                String path = "/uploads/images/";
-                sourceId = this.writeFileService.writeFile(userId, fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
-            } else {
-                sourceId = jsonNode.get("sourceId").asInt();
+                String path = "/uploads/images/"+vdName+"/";
+                resourceId = this.writeFileService.writeFile(userId, fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
             }
 
             jsonObject.setInt("id", id);
             jsonObject.setInt("userId", userId);
             jsonObject.setInt("vdId", vdId);
             jsonObject.setInt("subVdTypeId", subVdTypeId);
-            jsonObject.setInt("resourceId", sourceId);
+            jsonObject.setInt("resourceId", resourceId);
             jsonObject.setString("vdName", vdName);
             jsonObject.setString("remark", remark);
             jsonObject.setString("modifyAt", localDate);
@@ -243,6 +247,11 @@ public class VideoRest {
                 responseData.setResult(header);
                 responseData.setBody(header);
                 log.info(key+"Response data to http client :"+objectMapper.writeValueAsString(responseData));
+                if (isSelectedFile == true) {
+                    JsonObject input = new JsonObject();
+                    input.setInt("id", jsonNode.get("resourceId").asInt());
+                    this.eventPublisher.publishEvent(new RemoveFileEvent(input));
+                }
                 return responseData;
             }
 
