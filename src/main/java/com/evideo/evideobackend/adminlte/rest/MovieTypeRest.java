@@ -27,7 +27,7 @@ public class MovieTypeRest {
 
     final MovieTypeServiceImplement movieTypeService;
     MovieTypeRest(MovieTypeServiceImplement movieTypeService) {
-        key = GenerateRandomPassword.generateRandomPassword(25)+"::";
+        key = GenerateRandomPassword.key() + "::";
         this.movieTypeService = movieTypeService;
     }
 
@@ -68,7 +68,7 @@ public class MovieTypeRest {
             header.setResponseCode(StatusCode.notFound);
             header.setResponseMessage(MessageCode.exception);
         }catch (Exception | ValidatorException e) {
-            log.info(key+"Exception :"+String.valueOf(e));
+            log.error(key+"Exception :", e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
             responseData.setResult(header);
@@ -80,7 +80,6 @@ public class MovieTypeRest {
     @GetMapping(value = "/v0/read")
     public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        log.info(key+"Async Thread.sleep(10000);");
         ResponseData responseData = new ResponseData();
         Header header = new Header(StatusCode.success, MessageCode.success);
         try {
@@ -90,7 +89,7 @@ public class MovieTypeRest {
             responseData.setResult(header);
             responseData.setBody(restData);
         }catch (Exception | ValidatorException e) {
-            log.info("Exception :"+String.valueOf(e));
+            log.error(key+"Exception :", e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
             responseData.setResult(header);
@@ -129,7 +128,7 @@ public class MovieTypeRest {
             }
 
         }catch (Exception | ValidatorException e) {
-            log.info(key+"Exception Error delete :"+String.valueOf(e));
+            log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }
@@ -168,7 +167,7 @@ public class MovieTypeRest {
                 header.setResponseMessage("Invalid_Vd_Id");
             }
         } catch (Exception | ValidatorException e) {
-            log.info("Exception Error delete :"+String.valueOf(e));
+            log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }
@@ -183,7 +182,7 @@ public class MovieTypeRest {
         Header header = new Header(StatusCode.success, MessageCode.success);
 
         try {
-            log.info("Data from http client :"+objectMapper.writeValueAsString(jsonNode));
+            log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
             int id = jsonNode.get("id").asInt();
             String status = jsonNode.get("status").asText();
             if (status ==null || status.equals("")) {
@@ -203,7 +202,7 @@ public class MovieTypeRest {
                 if (update > 0) {
                     responseData.setResult(header);
                     responseData.setBody(header);
-                    log.info("updateStatusYN Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
+                    log.info(key+"updateStatusYN Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }
             } else {
@@ -212,12 +211,12 @@ public class MovieTypeRest {
             }
 
         }catch (Exception | ValidatorException e) {
-            log.info("Exception Error delete :"+String.valueOf(e));
+            log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }
         responseData.setResult(header);
-        log.info("Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
+        log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
 }

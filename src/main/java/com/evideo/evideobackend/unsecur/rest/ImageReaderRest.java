@@ -1,5 +1,6 @@
 package com.evideo.evideobackend.unsecur.rest;
 
+import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.unsecur.service.implement.ImageReaderServiceImplement;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,12 +27,14 @@ import java.io.InputStream;
 @RequestMapping(value = "/unsecur/api/image/reader")
 public class ImageReaderRest {
     static Logger log = Logger.getLogger(ImageReaderRest.class.getName());
+    private String key;
     @Inject
     private Environment env;
 
     final ImageReaderServiceImplement imageReaderService;
     ImageReaderRest(ImageReaderServiceImplement imageReaderService) {
         this.imageReaderService = imageReaderService;
+        key = GenerateRandomPassword.key() + "::";
     }
 
     @GetMapping("/v0/read/{resourceId}")
@@ -43,13 +46,14 @@ public class ImageReaderRest {
             input.setInt("id", resourceId);
             JsonObject imgInfo = this.imageReaderService.inquiryResourcesID(input);
 
-            log.info("file info values: " + objectMapper.writeValueAsString(imgInfo));
+            log.info(key+"file info values: " + objectMapper.writeValueAsString(imgInfo));
 
             if (imgInfo != null) {
                 String path = imgInfo.getString("fileSource");
                 String filepath = env.getProperty("vd.path")  + path;
                 String fileExt = imgInfo.getString("fileExtension");
-
+                log.info(key+"full path : " + filepath);
+                log.info(key+"full extension : " + fileExt);
                 File file = new File(filepath);
                 InputStream inputStream = new FileInputStream(file);
 
@@ -69,7 +73,7 @@ public class ImageReaderRest {
             }
 
         } catch (Exception e) {
-            log.error("error read image", e);
+            log.error(key+"error read image", e);
         }
         return null;
     }

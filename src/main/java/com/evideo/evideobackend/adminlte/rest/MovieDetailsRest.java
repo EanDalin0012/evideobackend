@@ -1,6 +1,7 @@
 package com.evideo.evideobackend.adminlte.rest;
 
 import com.evideo.evideobackend.adminlte.service.implement.MovieDetailsServiceImplement;
+import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.StatusCode;
 import com.evideo.evideobackend.core.dto.Header;
@@ -19,10 +20,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/api/movie-detail")
 public class MovieDetailsRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
-
+    private String key;
     final MovieDetailsServiceImplement movieDetailsService;
     MovieDetailsRest(MovieDetailsServiceImplement movieDetailsService) {
         this.movieDetailsService = movieDetailsService;
+        key = GenerateRandomPassword.key() + "::";
     }
 
     @PostMapping(value = "/v0/create")
@@ -32,7 +34,7 @@ public class MovieDetailsRest {
         Header header = new Header(StatusCode.success, MessageCode.success);
 
         try {
-            log.info("MovieDetailsRest Data from http client : "+objectMapper.writeValueAsString(jsonNode));
+            log.info(key+"MovieDetailsRest Data from http client : "+objectMapper.writeValueAsString(jsonNode));
 
             int vdTypeId = jsonNode.get("vdId").asInt();
             int subVdTypeId = jsonNode.get("subVdTypeId").asInt();
@@ -82,7 +84,7 @@ public class MovieDetailsRest {
             header.setResponseMessage(StatusCode.notFound);
 
         }catch (Exception | ValidatorException e) {
-            log.info("Exception :"+String.valueOf(e));
+            log.error(key+"MovieDetailsRest Exception :", e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }
@@ -96,7 +98,7 @@ public class MovieDetailsRest {
         ResponseData responseData = new ResponseData();
         Header header = new Header(StatusCode.success, MessageCode.success);
         try {
-            log.info("MovieDetailsRest Data http client data :"+objectMapper.writeValueAsString(jsonNode));
+            log.info(key+"MovieDetailsRest Data http client data :"+objectMapper.writeValueAsString(jsonNode));
             int vdId = jsonNode.get("vdId").asInt();
             if (vdId > 0) {
                 JsonObject jsonObject = new JsonObject();
@@ -104,7 +106,7 @@ public class MovieDetailsRest {
                 JsonObjectArray array = this.movieDetailsService.read(jsonObject);
                 responseData.setResult(header);
                 responseData.setBody(array);
-                log.info("MovieDetailsRest response http client data :"+objectMapper.writeValueAsString(responseData));
+                log.info(key+"MovieDetailsRest response http client data :"+objectMapper.writeValueAsString(responseData));
                 return responseData;
             } else {
                 header.setResponseCode(StatusCode.notFound);
@@ -112,7 +114,7 @@ public class MovieDetailsRest {
             }
 
         }catch (Exception | ValidatorException e) {
-            log.info("Exception :"+String.valueOf(e));
+            log.error(key+"Exception :", e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }

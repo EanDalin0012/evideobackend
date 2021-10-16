@@ -19,9 +19,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
-
 import javax.inject.Inject;
-
 
 @RestController
 @RequestMapping(value = "/api/video")
@@ -37,11 +35,12 @@ public class VideoRest {
     VideoRest(VideoServiceImplement videoService, WriteFileServiceImplement writeFileService) {
         this.videoService = videoService;
         this.writeFileService = writeFileService;
-        key = GenerateRandomPassword.generateRandomPassword(25);
+        key = GenerateRandomPassword.key() + "::";
     }
 
     @PostMapping(value = "/v0/create")
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+        log.info(key+"============= Start VideoRest Create ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
@@ -129,7 +128,7 @@ public class VideoRest {
             header.setResponseMessage(MessageCode.exception);
 
         }catch (Exception | ValidatorException e) {
-            log.info("Exception error :" + e.getMessage());
+            log.error(key+"VideoRest Exception error :" ,e );
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
 
@@ -141,8 +140,9 @@ public class VideoRest {
 
     @GetMapping(value = "/v0/read")
     public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
+        log.info(key+"============= Start VideoRest Read ============");
 
+        ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
         Header header = new Header(StatusCode.success, MessageCode.success);
         try {
@@ -152,7 +152,7 @@ public class VideoRest {
             responseData.setResult(header);
             responseData.setBody(restData);
         }catch (Exception | ValidatorException e) {
-            log.info("Exception :"+String.valueOf(e));
+            log.error(key+"VideoRest Exception :",e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
             responseData.setResult(header);
@@ -163,13 +163,14 @@ public class VideoRest {
 
     @PostMapping(value = "/v0/update")
     public ResponseData<JsonObject> update(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+        log.info(key+"============= Start VideoRest Update ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
         Header header = new Header(StatusCode.success, MessageCode.success);
 
         try{
-            log.info(key + "VideoRest Request Data From Http Client :"+objectMapper.writeValueAsString(jsonNode));
+//            log.info(key + "VideoRest Request Data From Http Client :"+objectMapper.writeValueAsString(jsonNode));
 
             int id = jsonNode.get("id").asInt();
             int vdId = jsonNode.get("vdId").asInt();
@@ -201,6 +202,7 @@ public class VideoRest {
 
             if (isSelectedFile) {
                 JsonNode fileInf = jsonNode.get("fileInfo");
+                log.info(key + "VideoRest jsonObject :"+objectMapper.writeValueAsString(fileInf).substring(0,30));
                 String fileBits = fileInf.get("fileBits").asText();
                 String fileName = fileInf.get("fileName").asText();
                 String fileExtension = fileInf.get("fileExtension").asText();
@@ -241,7 +243,7 @@ public class VideoRest {
             jsonObject.setString("remark", remark);
             jsonObject.setString("modifyAt", localDate);
             jsonObject.setString("status", Status.modify);
-
+            log.info(key + "VideoRest jsonObject :"+objectMapper.writeValueAsString(jsonObject));
             int update = this.videoService.update(jsonObject);
             if (update > 0) {
                 responseData.setResult(header);
@@ -259,7 +261,7 @@ public class VideoRest {
             header.setResponseMessage(MessageCode.exception);
 
         }catch (Exception | ValidatorException e) {
-            log.info("Exception error :" + String.valueOf(e));
+            log.error(key+"VideoRest Exception error :" ,e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }
@@ -270,6 +272,8 @@ public class VideoRest {
 
     @PostMapping(value = "/v0/delete")
     public ResponseData<JsonObject> delete(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+        log.info(key+"============= Start VideoRest Delete ============");
+
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
         Header header = new Header(StatusCode.success, MessageCode.success);
@@ -294,7 +298,7 @@ public class VideoRest {
             header.setResponseCode(StatusCode.notFound);
             header.setResponseMessage(MessageCode.exception);
         }catch (Exception | ValidatorException e) {
-            log.info("Exception error :" + String.valueOf(e));
+            log.error(key+"VideoRest Exception error :" , e);
             header.setResponseCode(StatusCode.exception);
             header.setResponseMessage(StatusCode.exception);
         }

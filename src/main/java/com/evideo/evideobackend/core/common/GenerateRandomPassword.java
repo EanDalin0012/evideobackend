@@ -40,7 +40,7 @@ public class GenerateRandomPassword {
         // each iteration of the loop randomly chooses a character from the given
         // ASCII range and appends it to the `StringBuilder` instance
 
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < 15; i++)
         {
             int randomIndex = random.nextInt(chars.length());
             sb.append(chars.charAt(randomIndex));
