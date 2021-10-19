@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserDao {
     JsonObject loadUserByName(JsonObject param);
+    JsonObject authorizationUser(JsonObject jsonObject);
     int addNewUser(JsonObject jsonObject) throws ValidatorException;
     int resetPassword(JsonObject jsonObject) throws ValidatorException;
     int count();

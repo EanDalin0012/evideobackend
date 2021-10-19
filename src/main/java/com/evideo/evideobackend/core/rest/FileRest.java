@@ -22,7 +22,7 @@ public class FileRest {
     public ResponseData<JsonObject> handleFileUpload(@RequestParam("file") MultipartFile multipartFile, @RequestParam("fileImageURL") String fileImageURL,
                                                      @RequestParam("userID") String userID) throws Exception {
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
             boolean file = multipartFile.isEmpty();

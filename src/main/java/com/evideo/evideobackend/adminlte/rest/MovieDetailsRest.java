@@ -31,7 +31,7 @@ public class MovieDetailsRest {
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
             log.info(key+"MovieDetailsRest Data from http client : "+objectMapper.writeValueAsString(jsonNode));
@@ -80,13 +80,13 @@ public class MovieDetailsRest {
                 }
             }
 
-            header.setResponseCode(StatusCode.notFound);
-            header.setResponseMessage(StatusCode.notFound);
+            header.setResponseCode(StatusCode.NotFound);
+            header.setResponseMessage(StatusCode.NotFound);
 
         }catch (Exception | ValidatorException e) {
             log.error(key+"MovieDetailsRest Exception :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         return responseData;
@@ -96,7 +96,7 @@ public class MovieDetailsRest {
     public ResponseData<JsonObject> read(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"MovieDetailsRest Data http client data :"+objectMapper.writeValueAsString(jsonNode));
             int vdId = jsonNode.get("vdId").asInt();
@@ -109,14 +109,14 @@ public class MovieDetailsRest {
                 log.info(key+"MovieDetailsRest response http client data :"+objectMapper.writeValueAsString(responseData));
                 return responseData;
             } else {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("inValidVdId");
             }
 
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         return responseData;
@@ -127,7 +127,7 @@ public class MovieDetailsRest {
     public ResponseData<JsonObject> inquiry(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         return responseData;
 

@@ -16,6 +16,7 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
@@ -32,7 +33,6 @@ public class VideoUnSecurRest {
     private Environment env;
 
     final VideoSourceServiceImplement videoSourceServiceImplement;
-
     VideoUnSecurRest(VideoSourceServiceImplement videoSourceServiceImplement) {
         this.videoSourceServiceImplement = videoSourceServiceImplement;
     }
@@ -65,7 +65,7 @@ public class VideoUnSecurRest {
     public ResponseData<JsonObject> loadUserByUserName(@RequestBody JsonObject jsonObject, @RequestParam("lang") String lang, @RequestParam("date") String date) {
 
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -86,13 +86,13 @@ public class VideoUnSecurRest {
             return responseData;
 
         }catch (Exception | ValidatorException e) {
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(MessageCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(MessageCode.Exception);
             e.printStackTrace();
         }
 
-        header.setResponseCode(StatusCode.notFound);
-        header.setResponseMessage(MessageCode.notFound);
+        header.setResponseCode(StatusCode.NotFound);
+        header.setResponseMessage(MessageCode.NotFound);
         responseData.setResult(header);
         return responseData;
     }

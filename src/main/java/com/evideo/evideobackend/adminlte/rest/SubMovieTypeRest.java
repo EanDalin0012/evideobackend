@@ -36,7 +36,7 @@ public class SubMovieTypeRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"Sub Movie Type Rest Client Request Data : "+objectMapper.writeValueAsString(jsonNode));
 
@@ -64,12 +64,12 @@ public class SubMovieTypeRest {
                     return responseData;
                 }
             }
-            header.setResponseCode(StatusCode.notFound);
-            header.setResponseMessage(MessageCode.exception);
+            header.setResponseCode(StatusCode.NotFound);
+            header.setResponseMessage(MessageCode.Exception);
         }catch (Exception | ValidatorException e) {
             log.error("Exception :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
             responseData.setResult(header);
         }
         log.info(key+"Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
@@ -82,7 +82,7 @@ public class SubMovieTypeRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             JsonObject jsonObject = new JsonObject();
             jsonObject.setString("status", Status.delete);
@@ -91,8 +91,8 @@ public class SubMovieTypeRest {
             responseData.setBody(restData);
         }catch (Exception | ValidatorException e) {
             log.info("Exception :"+String.valueOf(e));
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
             responseData.setResult(header);
         }
         log.info(key+"Sub Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
@@ -105,7 +105,7 @@ public class SubMovieTypeRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
             log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
@@ -125,14 +125,14 @@ public class SubMovieTypeRest {
                     return responseData;
                 }
             } else {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("Invalid_SubVd_Id");
             }
 
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception Error delete :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
@@ -145,7 +145,7 @@ public class SubMovieTypeRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
             int id = jsonNode.get("id").asInt();
@@ -167,13 +167,13 @@ public class SubMovieTypeRest {
                     return responseData;
                 }
             } else {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("Invalid_Vd_Id");
             }
         } catch (Exception | ValidatorException e) {
             log.error("Exception Error delete :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         return responseData;

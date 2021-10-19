@@ -16,7 +16,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -36,11 +35,13 @@ public class MovieTypeRest {
         ObjectMapper objectMapper = new ObjectMapper();
 
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"Movie Type Rest Client Request Data : "+objectMapper.writeValueAsString(jsonNode));
 
             int id = this.movieTypeService.count();
+            String fullName = jsonNode.get("fullName").asText();
+
             String name = jsonNode.get("name").asText();
             String remark = jsonNode.get("remark").asText();
             String localDate = CurrentDateUtil.get();
@@ -65,12 +66,12 @@ public class MovieTypeRest {
                     return responseData;
                 }
             }
-            header.setResponseCode(StatusCode.notFound);
-            header.setResponseMessage(MessageCode.exception);
+            header.setResponseCode(StatusCode.NotFound);
+            header.setResponseMessage(MessageCode.Exception);
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
             responseData.setResult(header);
         }
         log.info(key+"Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
@@ -81,7 +82,7 @@ public class MovieTypeRest {
     public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             JsonObject jsonObject = new JsonObject();
             jsonObject.setString("status", Status.delete);
@@ -90,8 +91,8 @@ public class MovieTypeRest {
             responseData.setBody(restData);
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
             responseData.setResult(header);
         }
 
@@ -103,7 +104,7 @@ public class MovieTypeRest {
     public ResponseData<JsonObject> delete(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
             log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
@@ -123,14 +124,14 @@ public class MovieTypeRest {
                     return responseData;
                 }
             } else {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("Invalid_Vd_Id");
             }
 
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception Error delete :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
@@ -141,7 +142,7 @@ public class MovieTypeRest {
     public ResponseData<JsonObject> update(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
             int id = jsonNode.get("id").asInt();
@@ -163,13 +164,13 @@ public class MovieTypeRest {
                     return responseData;
                 }
             } else {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("Invalid_Vd_Id");
             }
         } catch (Exception | ValidatorException e) {
             log.error(key+"Exception Error delete :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         return responseData;
@@ -179,7 +180,7 @@ public class MovieTypeRest {
     public ResponseData<JsonObject> updateStatusYN(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
             log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
@@ -187,7 +188,7 @@ public class MovieTypeRest {
             String status = jsonNode.get("status").asText();
             if (status ==null || status.equals("")) {
                 header.setResponseMessage("invalidStatus");
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 responseData.setResult(header);
                 return responseData;
             }
@@ -206,14 +207,14 @@ public class MovieTypeRest {
                     return responseData;
                 }
             } else {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("Invalid_Vd_Id");
             }
 
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception Error delete :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));

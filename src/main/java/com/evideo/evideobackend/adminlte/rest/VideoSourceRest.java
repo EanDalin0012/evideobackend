@@ -45,7 +45,7 @@ public class VideoSourceRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             JsonObject jsonObject = new JsonObject();
             jsonObject.setString("status", Status.delete);
@@ -54,8 +54,8 @@ public class VideoSourceRest {
             responseData.setBody(restData);
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
             responseData.setResult(header);
         }
         log.info(key+"Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
@@ -68,12 +68,12 @@ public class VideoSourceRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             int vdId = jsonNode.get("vdId").asInt();
 
             if (vdId <=0 ) {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidVdId");
                 responseData.setResult(header);
                 return  responseData;
@@ -87,8 +87,8 @@ public class VideoSourceRest {
             responseData.setBody(restData);
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
             responseData.setResult(header);
         }
         log.info(key+"Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
@@ -101,7 +101,7 @@ public class VideoSourceRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
 //            log.info(key + "Request Data from http Client :" + objectMapper.writeValueAsString(jsonNode));
@@ -118,22 +118,22 @@ public class VideoSourceRest {
             String fileExtension = "";
 
             if (vdId <= 0) {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidVdId");
                 responseData.setResult(header);
                 return responseData;
             }  else if (vdName == null || vdName.equals("")) {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidVdName");
                 responseData.setResult(header);
                 return responseData;
             } else if (videoSourcePart <= 0) {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidVideoSourcePart");
                 responseData.setResult(header);
                 return responseData;
             } else if (fileInf == null) {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidFileImage");
                 responseData.setResult(header);
                 return responseData;
@@ -143,17 +143,17 @@ public class VideoSourceRest {
                 fileExtension = fileInf.get("fileExtension").asText();
 
                 if (fileBits == null || fileBits.equals("")) {
-                    header.setResponseCode(StatusCode.notFound);
+                    header.setResponseCode(StatusCode.NotFound);
                     header.setResponseMessage("invalidFileImage");
                     responseData.setResult(header);
                     return responseData;
                 } else if (fileName == null || fileName.equals("")) {
-                    header.setResponseCode(StatusCode.notFound);
+                    header.setResponseCode(StatusCode.NotFound);
                     header.setResponseMessage("invalidFileImage");
                     responseData.setResult(header);
                     return responseData;
                 } else if (fileExtension == null || fileExtension.equals("")) {
-                    header.setResponseCode(StatusCode.notFound);
+                    header.setResponseCode(StatusCode.NotFound);
                     header.setResponseMessage("invalidFileImage");
                     responseData.setResult(header);
                     return responseData;
@@ -190,13 +190,13 @@ public class VideoSourceRest {
                 log.info(key+"VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
                 return responseData;
             }
-            header.setResponseCode(StatusCode.notFound);
-            header.setResponseMessage(MessageCode.exception);
+            header.setResponseCode(StatusCode.NotFound);
+            header.setResponseMessage(MessageCode.Exception);
 
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception error :" , e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
@@ -211,7 +211,7 @@ public class VideoSourceRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try{
             int vdId = jsonNode.get("vdId").asInt();
             JsonObject jsonObject = new JsonObject();
@@ -225,8 +225,8 @@ public class VideoSourceRest {
             return responseData;
         }catch (Exception | ValidatorException e) {
             log.error("Exception error :" , e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
         return responseData;
@@ -238,7 +238,7 @@ public class VideoSourceRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
 
@@ -253,17 +253,17 @@ public class VideoSourceRest {
             int resourceId          = jsonNode.get("resourceId").asInt();
 
             if (vdId <= 0) {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidVdId");
                 responseData.setResult(header);
                 return responseData;
             }  else if (vdName.equals("")) {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidVdName");
                 responseData.setResult(header);
                 return responseData;
             } else if (videoSourcePart <= 0) {
-                header.setResponseCode(StatusCode.notFound);
+                header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidVideoSourcePart");
                 responseData.setResult(header);
                 return responseData;
@@ -276,23 +276,23 @@ public class VideoSourceRest {
                 String fileExtension = fileInf.get("fileExtension").asText();
 
                 if (fileInf == null) {
-                    header.setResponseCode(StatusCode.notFound);
+                    header.setResponseCode(StatusCode.NotFound);
                     header.setResponseMessage("invalidFileImage");
                     responseData.setResult(header);
                     return responseData;
                 } else if (fileInf != null) {
                     if (fileBits.equals("")) {
-                        header.setResponseCode(StatusCode.notFound);
+                        header.setResponseCode(StatusCode.NotFound);
                         header.setResponseMessage("invalidFileImage");
                         responseData.setResult(header);
                         return responseData;
                     } else if (fileName.equals("")) {
-                        header.setResponseCode(StatusCode.notFound);
+                        header.setResponseCode(StatusCode.NotFound);
                         header.setResponseMessage("invalidFileImage");
                         responseData.setResult(header);
                         return responseData;
                     } else if ( fileExtension.equals("")) {
-                        header.setResponseCode(StatusCode.notFound);
+                        header.setResponseCode(StatusCode.NotFound);
                         header.setResponseMessage("invalidFileImage");
                         responseData.setResult(header);
                         return responseData;
@@ -336,13 +336,13 @@ public class VideoSourceRest {
 
                 return responseData;
             }
-            header.setResponseCode(StatusCode.notFound);
-            header.setResponseMessage(MessageCode.exception);
+            header.setResponseCode(StatusCode.NotFound);
+            header.setResponseMessage(MessageCode.Exception);
 
         }catch (Exception | ValidatorException e) {
             log.error("Exception error :" , e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         responseData.setResult(header);
         log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
@@ -355,7 +355,7 @@ public class VideoSourceRest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"VideoRest delete Data from http client :"+objectMapper.writeValueAsString(jsonNode));
             int id = jsonNode.get("id").asInt();
@@ -374,12 +374,12 @@ public class VideoSourceRest {
                     return responseData;
                 }
             }
-            header.setResponseCode(StatusCode.notFound);
-            header.setResponseMessage(MessageCode.exception);
+            header.setResponseCode(StatusCode.NotFound);
+            header.setResponseMessage(MessageCode.Exception);
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception error :", e);
-            header.setResponseCode(StatusCode.exception);
-            header.setResponseMessage(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(StatusCode.Exception);
         }
         log.info(key+"Response data to http client :"+objectMapper.writeValueAsString(responseData));
         return responseData;

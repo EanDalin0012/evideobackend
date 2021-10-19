@@ -25,8 +25,14 @@ public class UserService implements UserInterface {
     }
 
     @Override
+    public JsonObject authorizationUser(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject, "userName");
+        return this.userDao.authorizationUser(jsonObject);
+    }
+
+    @Override
     public int addNewUser(JsonObject jsonObject) throws ValidatorException {
-        ValidatorUtil.validate(jsonObject, "id","userName", "firstName", "lastName", "gender", "dateBirth");
+        ValidatorUtil.validate(jsonObject, "id","password", "userName", "fullName", "dateBirth", "gender", "dateBirth");
         return this.userDao.addNewUser(jsonObject);
     }
 
@@ -38,7 +44,7 @@ public class UserService implements UserInterface {
 
     @Override
     public int count() {
-        return this.userDao.count();
+        return this.userDao.count() + 1;
     }
 
     @Override

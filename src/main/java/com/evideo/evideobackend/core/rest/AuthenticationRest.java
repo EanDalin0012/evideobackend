@@ -28,7 +28,7 @@ public class AuthenticationRest {
     @GetMapping(value = "/revoke-token")
     public ResponseData<JsonObject> oauthRevokeToken(HttpServletRequest request) {
         ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.success, MessageCode.success);
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
         JsonObject output = new JsonObject();
         try {
             log.info("========== Start Revoke Token ===========");
@@ -52,7 +52,7 @@ public class AuthenticationRest {
 
         } catch (Exception e) {
             log.error("======== Get Error Revoke Token Exception ", e);
-            header.setResponseCode(StatusCode.exception);
+            header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(e.getCause().toString());
         }
         responseData.setResult(header);
