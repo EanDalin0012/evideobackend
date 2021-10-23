@@ -5,6 +5,9 @@
     <resultMap type="JsonObject" id="authorization">
         <id property="id" column="id"/>
         <result property="username" column="user_name"/>
+        <result property="resourceId" column="resource_id"/>
+        <result property="phoneNumber" column="phone_number"/>
+        <result property="fullName" column="full_name"/>
         <result property="accountExpired" column="account_expired"/>
         <result property="accountLocked" column="account_locked"/>
         <result property="credentialsExpired" column="credentials_expired"/>
@@ -26,12 +29,36 @@
 				, u.account_locked
 				, u.credentials_expired
 				, u.enabled
+				, u.resource_id
+				, u.phone_number
+				, u.full_name
 				, au."name" as "authority_name"
 				, au."id" as "authority_id"
 			FROM user_ as u
 			LEFT JOIN users_authorities as ua on u."id" = ua.user_id
 			LEFT JOIN authority as au on au."id" = ua.authority_id
 			WHERE u.user_name = #{userName};
+	   ]]>
+    </select>
+
+    <select id="authorizationByUserId" resultMap="authorization">
+        <![CDATA[
+			SELECT
+				 u.id
+				, u.user_name
+				, u.account_expired
+				, u.account_locked
+				, u.credentials_expired
+				, u.enabled
+				, u.resource_id
+				, u.phone_number
+				, u.full_name
+				, au."name" as "authority_name"
+				, au."id" as "authority_id"
+			FROM user_ as u
+			LEFT JOIN users_authorities as ua on u."id" = ua.user_id
+			LEFT JOIN authority as au on au."id" = ua.authority_id
+			WHERE u.id = #{userId};
 	   ]]>
     </select>
 
@@ -57,6 +84,34 @@
                 , role_id       as "roleId"
             FROM user_
             WHERE user_name = #{userName};
+
+	     ]]>
+    </select>
+
+    <select id="read" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+                id
+                , account_expired       as "accountExpired"
+                , account_locked        as "accountLocked"
+                , credentials_expired   as "credentialsExpired"
+                , enabled
+                , user_name             as "userName"
+                , status
+                , create_date           as "createAt"
+                , create_by             as "createBy"
+                , full_name             as "fullName"
+                , gender
+                , date_birth            as "dateBirth"
+                , phone_number          as "phoneNumber"
+                , resource_id           as "resourceId"
+                , is_first_login        as "isFirstLogin"
+                , remark
+                , address
+                , role_id               as "roleId"
+            FROM user_
+            where status != #{status} and id != #{id}
+             order by id DESC;
 
 	     ]]>
     </select>
@@ -134,15 +189,18 @@
         <![CDATA[
             UPDATE user_
 			SET
-			    first_name      = #{firstName}
-			    , last_name     = #{lastName}
+			    full_name       = #{fullName}
 			    , gender        = #{gender}
 			    , date_birth    = #{dateBirth}
 			    , phone_number  = #{phoneNumber}
-			    , other_phone_number    = #{otherPhone}
-			    , address               = #{address}
-			    , resource_id           = #{resourceID}
-			WHERE id 	= #{userID}
+			    , user_name     = #{userName}
+			    , address       = #{address}
+			    , role_id       = #{roleId}
+			    , resource_id   = #{resourceId}
+			    , status        = #{status}
+			    , modify_date   = #{modifyAt}
+			    , modify_by     = #{userId}
+			WHERE id 	= #{id}
     	]]>
     </update>
 
@@ -161,5 +219,39 @@
 	      select coalesce(MAX(id), 0) FROM  user_;
 	     ]]>
     </select>
+
+    <update id="deleteUser">
+        <![CDATA[
+            UPDATE user_
+			SET
+				modify_date = #{modifyAt}
+				, status    = #{status}
+			WHERE id 	    = #{userId}
+    	]]>
+    </update>
+
+    <update id="enableStatus">
+        <![CDATA[
+            UPDATE user_
+			SET
+				modify_date = #{modifyAt}
+				, modify_by     = #{userId}
+				, status    = #{status}
+				, enabled    = #{enable}
+			WHERE id 	    = #{userId}
+    	]]>
+    </update>
+
+    <update id="changePassword">
+        <![CDATA[
+            UPDATE user_
+			SET
+				modify_date = #{modifyAt}
+				, modify_by = #{userId}
+				, status    = #{status}
+				, password  = #{password}
+			WHERE id 	    = #{userId}
+    	]]>
+    </update>
 
 </mapper>

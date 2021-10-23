@@ -3,9 +3,9 @@ CREATE SEQUENCE sequence_vd_source START 1;
 
 SELECT nextval('sequence_vd_source');
 
-INSERT INTO user_
-(id, account_expired, account_locked, credentials_expired, enabled, "password", user_name, status, create_date, create_by, modify_date, modify_by, last_login_date, last_login_time, first_name, last_name, gender, date_birth, phone_number, other_phone_number, resource_id, is_online, is_first_login, remark, address, identify_info_id, identify_info_resource_id)
-VALUES(1, false, false, false, true, '$2a$10$s6KZ/OmEPClG0dq78GDaO.Fc47yKTaQuYyjSWJziipqd3IzBlOMyK', 'admin@gmail.com', '3', '20210830', NULL, '20200924', 2, '20200924', '110541', 'Company', 'Account', 'm', '20170107', '0966555879', NULL, 21, NULL, false, NULL, 'PP', NULL, NULL);
+INSERT INTO public.user_
+(id, account_expired, account_locked, credentials_expired, enabled, "password", user_name, status, create_date, create_by, modify_date, modify_by, last_login_date, last_login_time, full_name, gender, date_birth, phone_number, other_phone_number, resource_id, is_online, is_first_login, remark, address, identify_info_id, identify_info_resource_id, role_id)
+VALUES(10, false, false, false, true, '$2a$10$s6KZ/OmEPClG0dq78GDaO.Fc47yKTaQuYyjSWJziipqd3IzBlOMyK', 'admin@gmail.com', '3', '20210830', NULL, '20200924', 2, '20200924', '110541', 'Company', 'm', '20170107', '0966555879', NULL, 1, NULL, false, NULL, 'PP', NULL, NULL, 1);
 
 --1
 INSERT INTO authority(id,name)VALUES(1,'User_Read');

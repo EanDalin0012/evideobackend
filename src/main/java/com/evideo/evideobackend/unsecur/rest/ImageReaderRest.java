@@ -46,14 +46,14 @@ public class ImageReaderRest {
             input.setInt("id", resourceId);
             JsonObject imgInfo = this.imageReaderService.inquiryResourcesID(input);
 
-            log.info(key+"file info values: " + objectMapper.writeValueAsString(imgInfo));
+//            log.info(key+"file info values: " + objectMapper.writeValueAsString(imgInfo));
 
             if (imgInfo != null) {
                 String path = imgInfo.getString("fileSource");
                 String filepath = env.getProperty("vd.path")  + path;
                 String fileExt = imgInfo.getString("fileExtension");
-                log.info(key+"full path : " + filepath);
-                log.info(key+"full extension : " + fileExt);
+//                log.info(key+"full path : " + filepath);
+//                log.info(key+"full extension : " + fileExt);
                 File file = new File(filepath);
                 InputStream inputStream = new FileInputStream(file);
 

@@ -2,6 +2,7 @@ package com.evideo.evideobackend.core.service.implement;
 
 import com.evideo.evideobackend.core.dao.UserDao;
 import com.evideo.evideobackend.core.dto.JsonObject;
+import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.exception.ValidatorException;
 import com.evideo.evideobackend.core.service.UserInterface;
 import com.evideo.evideobackend.core.util.ValidatorUtil;
@@ -31,6 +32,12 @@ public class UserService implements UserInterface {
     }
 
     @Override
+    public JsonObject authorizationByUserId(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject, "userId");
+        return this.userDao.authorizationByUserId(jsonObject);
+    }
+
+    @Override
     public int addNewUser(JsonObject jsonObject) throws ValidatorException {
         ValidatorUtil.validate(jsonObject, "id","password", "userName", "fullName", "dateBirth", "gender", "dateBirth");
         return this.userDao.addNewUser(jsonObject);
@@ -49,7 +56,7 @@ public class UserService implements UserInterface {
 
     @Override
     public int updateUserInfo(JsonObject jsonObject) throws ValidatorException {
-        ValidatorUtil.validate(jsonObject, "userID","firstName", "lastName", "gender", "dateBirth");
+        ValidatorUtil.validate(jsonObject, "userId","fullName", "gender", "dateBirth");
         return this.userDao.updateUserInfo(jsonObject);
     }
 
@@ -57,5 +64,29 @@ public class UserService implements UserInterface {
     public JsonObject inquiryUserInfoByID(JsonObject param) throws ValidatorException {
         ValidatorUtil.validate(param, "userID");
         return this.userDao.inquiryUserInfoByID(param);
+    }
+
+    @Override
+    public JsonObjectArray read(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject, "status", "id");
+        return this.userDao.read(jsonObject);
+    }
+
+    @Override
+    public int deleteUser(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject, "status", "userId", "modifyAt");
+        return this.userDao.deleteUser(jsonObject);
+    }
+
+    @Override
+    public int enableStatus(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject, "status", "userId", "modifyAt", "enable");
+        return this.userDao.enableStatus(jsonObject);
+    }
+
+    @Override
+    public int changePassword(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject, "status", "userId", "modifyAt", "password");
+        return this.userDao.changePassword(jsonObject);
     }
 }

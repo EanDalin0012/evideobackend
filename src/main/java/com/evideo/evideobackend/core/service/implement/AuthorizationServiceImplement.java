@@ -20,4 +20,10 @@ public class AuthorizationServiceImplement implements AuthorizationService {
         ValidatorUtil.validate(jsonObject, "userId", "authorityId");
         return this.authorizationDao.addAuthorizationAccess(jsonObject);
     }
+
+    @Override
+    public int deleteAuthorizationAccessByUserId(JsonObject jsonObject) throws ValidatorException {
+        ValidatorUtil.validate(jsonObject, "userId");
+        return this.authorizationDao.deleteAuthorizationAccessByUserId(jsonObject);
+    }
 }

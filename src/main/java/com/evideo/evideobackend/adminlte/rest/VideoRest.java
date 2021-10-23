@@ -131,7 +131,10 @@ public class VideoRest {
             log.error(key+"VideoRest Exception error :" ,e );
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
-
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         log.info(key+"Response data to http client :"+objectMapper.writeValueAsString(responseData));
@@ -269,6 +272,10 @@ public class VideoRest {
             log.error(key+"VideoRest Exception error :" ,e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         log.info(key+"Response data to http client :"+objectMapper.writeValueAsString(responseData));
@@ -306,6 +313,10 @@ public class VideoRest {
             log.error(key+"VideoRest Exception error :" , e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         log.info(key+"Response data to http client :"+objectMapper.writeValueAsString(responseData));
         return responseData;

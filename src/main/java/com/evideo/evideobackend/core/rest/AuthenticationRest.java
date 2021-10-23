@@ -54,6 +54,10 @@ public class AuthenticationRest {
             log.error("======== Get Error Revoke Token Exception ", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(e.getCause().toString());
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         return responseData;

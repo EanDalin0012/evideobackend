@@ -70,6 +70,10 @@ public class SubMovieTypeRest {
             log.error("Exception :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
             responseData.setResult(header);
         }
         log.info(key+"Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
@@ -93,6 +97,10 @@ public class SubMovieTypeRest {
             log.info("Exception :"+String.valueOf(e));
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
             responseData.setResult(header);
         }
         log.info(key+"Sub Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
@@ -133,6 +141,10 @@ public class SubMovieTypeRest {
             log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
@@ -174,6 +186,10 @@ public class SubMovieTypeRest {
             log.error("Exception Error delete :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         return responseData;

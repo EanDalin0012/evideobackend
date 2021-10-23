@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface AuthorizationDao {
     int addAuthorizationAccess(JsonObject jsonObject);
+    int deleteAuthorizationAccessByUserId(JsonObject jsonObject);
 }

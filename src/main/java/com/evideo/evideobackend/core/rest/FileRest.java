@@ -34,9 +34,6 @@ public class FileRest {
                 is = multipartFile.getInputStream();
                 IOUtils.closeQuietly(is);
             }
-
-
-
         }catch (Exception e) {
             e.printStackTrace();
         }

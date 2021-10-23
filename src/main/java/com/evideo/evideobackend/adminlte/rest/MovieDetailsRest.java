@@ -117,6 +117,10 @@ public class MovieDetailsRest {
             log.error(key+"Exception :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         return responseData;

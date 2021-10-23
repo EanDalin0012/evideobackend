@@ -83,14 +83,17 @@ public class VideoSourceRest {
             jsonObject.setString("status", Status.delete);
             jsonObject.setInt("vdId", vdId);
             JsonObjectArray restData = this.videoSourceLTEService.inquiryByVdId(jsonObject);
-            responseData.setResult(header);
             responseData.setBody(restData);
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
-            responseData.setResult(header);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
+        responseData.setResult(header);
         log.info(key+"Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
@@ -197,6 +200,10 @@ public class VideoSourceRest {
             log.error(key+"Exception error :" , e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
@@ -227,6 +234,10 @@ public class VideoSourceRest {
             log.error("Exception error :" , e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
         return responseData;
@@ -343,6 +354,10 @@ public class VideoSourceRest {
             log.error("Exception error :" , e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         log.info(key+" VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
@@ -380,6 +395,10 @@ public class VideoSourceRest {
             log.error(key+"Exception error :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         log.info(key+"Response data to http client :"+objectMapper.writeValueAsString(responseData));
         return responseData;

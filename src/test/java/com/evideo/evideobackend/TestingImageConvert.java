@@ -2,6 +2,8 @@ package com.evideo.evideobackend;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import sun.misc.BASE64Decoder;
 
 import javax.xml.bind.DatatypeConverter;
@@ -10,18 +12,22 @@ public class TestingImageConvert {
 
     public static void main(String[] args) {
         try {
-            String fileName = "G:\\my-vd\\uploads\\video\\My-t\\3e42f591-f709-43d2-b2d9-f6173c907473-FlutterUIAppIntroWithIndicatorsApplicationUIUXDesignday.mp4";
+            BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+            String passwordEncoder  = bCryptPasswordEncoder.encode("password");
+            System.out.println(passwordEncoder);
+
+//            String fileName = "G:\\my-vd\\uploads\\video\\My-t\\3e42f591-f709-43d2-b2d9-f6173c907473-FlutterUIAppIntroWithIndicatorsApplicationUIUXDesignday.mp4";
 //            try {
 //                Files.delete(Paths.get(fileName));
 //            } catch (IOException e) {
 //                e.printStackTrace();
 
-            String filePath = "G:\\\\my-vd\\\\uploads\\\\video\\\\Flutter\\\\e5af3dd3-8c-90b0-269bf9009acd-Flutter-Animations-RadialMenuwithAnimatedSwitcher.mp4";
-            File f = new File(fileName);
-            System.out.println(f.exists());
-            if (f.exists()) {
-                f.delete();
-            }
+//            String filePath = "G:\\\\my-vd\\\\uploads\\\\video\\\\Flutter\\\\e5af3dd3-8c-90b0-269bf9009acd-Flutter-Animations-RadialMenuwithAnimatedSwitcher.mp4";
+//            File f = new File(fileName);
+//            System.out.println(f.exists());
+//            if (f.exists()) {
+//                f.delete();
+//            }
         }catch (Exception e) {
             e.printStackTrace();
         }

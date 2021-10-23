@@ -215,6 +215,10 @@ public class MovieTypeRest {
             log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
         }
         responseData.setResult(header);
         log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));

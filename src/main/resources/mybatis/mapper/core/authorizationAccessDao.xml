@@ -10,4 +10,9 @@
 	     ]]>
     </insert>
 
+    <delete id="deleteAuthorizationAccessByUserId">
+        DELETE from users_authorities
+        WHERE user_id= #{userId}
+    </delete>
+
 </mapper>
