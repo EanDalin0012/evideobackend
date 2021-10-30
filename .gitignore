@@ -23,6 +23,8 @@ target/
 /nbproject/private/
 /nbbuild/
 /dist/
+/logs/
+/uploads/
 /nbdist/
 /.nb-gradle/
 build/
@@ -31,3 +33,4 @@ build/
 
 ### VS Code ###
 .vscode/
+/bin/

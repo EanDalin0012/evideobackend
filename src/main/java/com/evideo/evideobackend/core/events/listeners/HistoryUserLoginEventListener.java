@@ -24,6 +24,7 @@ public class HistoryUserLoginEventListener implements ApplicationListener<Histor
     public void onApplicationEvent(HistoryUserLoginEvent event) {
         try {
             log.info("================== Start Listener Keep Device Info ===============");
+//            Thread.sleep(10000);
             ObjectMapper objectMapper =new ObjectMapper();
             JsonObject deviceInfo = (JsonObject) event.getSource();
             JsonObject input = new JsonObject();

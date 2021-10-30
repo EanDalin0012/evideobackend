@@ -5,6 +5,9 @@
     <resultMap type="JsonObject" id="authorization">
         <id property="id" column="id"/>
         <result property="username" column="user_name"/>
+        <result property="roleName" column="roleName"/>
+        <result property="roleId" column="roleId"/>
+        <result property="createAt" column="create_date"/>
         <result property="resourceId" column="resource_id"/>
         <result property="phoneNumber" column="phone_number"/>
         <result property="fullName" column="full_name"/>
@@ -46,18 +49,23 @@
 			SELECT
 				 u.id
 				, u.user_name
+				, ur."name"	as roleName
+				, ur."id" as roleId
 				, u.account_expired
 				, u.account_locked
 				, u.credentials_expired
 				, u.enabled
+				, u.create_date
 				, u.resource_id
 				, u.phone_number
 				, u.full_name
+				, u.resource_id       as "resourceId"
 				, au."name" as "authority_name"
 				, au."id" as "authority_id"
 			FROM user_ as u
 			LEFT JOIN users_authorities as ua on u."id" = ua.user_id
 			LEFT JOIN authority as au on au."id" = ua.authority_id
+			LEFT JOIN user_role as ur on u.role_id = ur."id"
 			WHERE u.id = #{userId};
 	   ]]>
     </select>
