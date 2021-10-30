@@ -2,7 +2,6 @@ package com.evideo.evideobackend.core.rest;
 
 import java.io.File;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.Status;
@@ -23,7 +21,6 @@ import com.evideo.evideobackend.core.exception.ValidatorException;
 import com.evideo.evideobackend.core.service.implement.FileServiceImplement;
 import com.evideo.evideobackend.core.util.CurrentDateUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -48,25 +45,47 @@ public class FilesController {
 
     
     @PostMapping("/video/upload") // //new annotation since 4.3
-    public  ResponseData<JsonObject> singleFileUpload(@RequestParam("file") MultipartFile file,  @RequestParam("title") String title,@RequestParam("userId") int userId, RedirectAttributes redirectAttributes) throws ParseException {
+    public  ResponseData<JsonObject> singleFileUpload(@RequestParam("file") MultipartFile file,  @RequestParam("title") String title, @RequestParam("fileUpload") String fileUpload, @RequestParam("userId") int userId, RedirectAttributes redirectAttributes) throws ParseException {
     	log.info(key + "FilesController Start");
     	ObjectMapper mapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
             header.setResponseCode(StatusCode.NotFound);
             header.setResponseMessage("invalidFileInfo");
-            responseData.setBody(header);
             responseData.setResult(header);
             return responseData;
         }
         
         try {
-        	String mkdir = env.getProperty("vd.path") +"/video/upload/"+title+"/";
+        	
+        	String source = "/Unknows/uploads/";
+        	if(fileUpload.equals("LstVideo")) {
+        		source = "/Images/uploads/";
+        	} else if (fileUpload.equals("LstVideoSource")) {
+        		source = "/videos/uploads/"+title+"/";
+        	} else if (fileUpload.equals("Profile")) {
+        		source = "/Profiles/uploads/";
+        	} else if (fileUpload.equals("Image")) {
+        		source = "/Imgs/uploads/";
+        	}
+        	
+        	String mkdir = env.getProperty("vd.path") + source;
         	String originalFilename = file.getOriginalFilename();
-        	 
+        	
+        	Path pathCheck = Paths.get(mkdir + originalFilename);
+            if (Files.exists(pathCheck)) {
+            	log.info(key + "exists :"+Files.exists(pathCheck));
+       		 	header.setResponseCode(StatusCode.NotFound);
+                header.setResponseMessage("videoSourceNameReadyHave");
+                responseData.setResult(header);
+                return responseData;
+            }
+            
+        	
+        	log.info(key + "mkdir : "+mkdir);
         	log.info(key + "file title : "+title);
         	log.info(key + "original file name :"+originalFilename);
         	 
@@ -101,7 +120,7 @@ public class FilesController {
             jsonObject.setInt("userId", userId);
             jsonObject.setString("fileName", file.getOriginalFilename());
             jsonObject.setString("fileExtension", extension);
-            jsonObject.setString("fileSource", path.toString());
+            jsonObject.setString("fileSource", source + originalFilename);
             jsonObject.setString("status", Status.active);
             jsonObject.setString("fileType", file.getContentType());
             jsonObject.setString("createAt", localDate);
@@ -111,7 +130,7 @@ public class FilesController {
             int save = this.fileService.create(jsonObject);
             if (save > 0) {
             	JsonObject json = new JsonObject();
-            	json.setInt("videoSourceId", id);
+            	json.setInt("sourceId", id);
             	responseData.setResult(header);
             	responseData.setBody(json);
             	return responseData;
@@ -134,7 +153,6 @@ public class FilesController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        responseData.setBody(header);
         responseData.setResult(header);
         return responseData;
     }

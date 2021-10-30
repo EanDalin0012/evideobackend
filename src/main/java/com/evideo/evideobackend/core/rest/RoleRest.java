@@ -32,9 +32,9 @@ public class RoleRest {
     }
 
     @GetMapping(value = "/v0/read")
-    public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+    public ResponseData<JsonObjectArray> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             JsonObject jsonObject = new JsonObject();

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 public class MovieDetailsRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
     private String key;
+    
     final MovieDetailsServiceImplement movieDetailsService;
     MovieDetailsRest(MovieDetailsServiceImplement movieDetailsService) {
         this.movieDetailsService = movieDetailsService;
@@ -30,7 +31,7 @@ public class MovieDetailsRest {
     @PostMapping(value = "/v0/create")
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
@@ -58,7 +59,6 @@ public class MovieDetailsRest {
                 jsonObject.setString("createAt", localDate);
                 int save = this.movieDetailsService.create(jsonObject);
                 if (save > 0 ) {
-                    responseData.setBody(header);
                     responseData.setResult(header);
                     return responseData;
                 }
@@ -74,7 +74,6 @@ public class MovieDetailsRest {
                 objUpdate.setString("modifyAt", localDate);
                 int update = this.movieDetailsService.update(objUpdate);
                 if (update > 0 ) {
-                    responseData.setBody(header);
                     responseData.setResult(header);
                     return responseData;
                 }
@@ -93,9 +92,9 @@ public class MovieDetailsRest {
     }
 
     @PostMapping(value = "/v0/read")
-    public ResponseData<JsonObject> read(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+    public ResponseData<JsonObjectArray> read(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"MovieDetailsRest Data http client data :"+objectMapper.writeValueAsString(jsonNode));
@@ -127,13 +126,13 @@ public class MovieDetailsRest {
 
     }
 
-    @PostMapping(value = "/v0/inquiry")
-    public ResponseData<JsonObject> inquiry(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
-        Header header = new Header(StatusCode.Success, MessageCode.Success);
-
-        return responseData;
-
-    }
+//    @PostMapping(value = "/v0/inquiry")
+//    public ResponseData<JsonObject> inquiry(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        ResponseData responseData = new ResponseData();
+//        Header header = new Header(StatusCode.Success, MessageCode.Success);
+//
+//        return responseData;
+//
+//    }
 }

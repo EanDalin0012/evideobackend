@@ -27,7 +27,7 @@ public class AuthenticationRest {
 
     @GetMapping(value = "/revoke-token")
     public ResponseData<JsonObject> oauthRevokeToken(HttpServletRequest request) {
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         JsonObject output = new JsonObject();
         try {
@@ -44,7 +44,6 @@ public class AuthenticationRest {
                 OAuth2AccessToken accessToken = tokenStore.readAccessToken(tokenValue);
                 tokenStore.removeAccessToken(accessToken);
             }
-            responseData.setBody(header);
 
             log.info("========= Response Values:" + objectMapper.writeValueAsString(responseData));
             log.info("========== End Invoke Token ===========");
@@ -54,6 +53,7 @@ public class AuthenticationRest {
             log.error("======== Get Error Revoke Token Exception ", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(e.getCause().toString());
+            
             if (e.getMessage().equals(MessageCode.Forbidden)) {
                 header.setResponseCode(StatusCode.Forbidden);
                 header.setResponseMessage(MessageCode.Forbidden);

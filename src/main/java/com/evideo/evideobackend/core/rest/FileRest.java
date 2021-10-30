@@ -21,7 +21,7 @@ public class FileRest {
     @PostMapping("/upload")
     public ResponseData<JsonObject> handleFileUpload(@RequestParam("file") MultipartFile multipartFile, @RequestParam("fileImageURL") String fileImageURL,
                                                      @RequestParam("userID") String userID) throws Exception {
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {

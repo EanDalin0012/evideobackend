@@ -40,18 +40,20 @@ public class VideoSourceRest {
     }
 
     @GetMapping(value = "/v0/read")
-    public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+    public ResponseData<JsonObjectArray> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         log.info(key+"============= Start VideoSourceRest Read ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
+        	
             JsonObject jsonObject = new JsonObject();
             jsonObject.setString("status", Status.delete);
             JsonObjectArray restData = this.videoSourceLTEService.read(jsonObject);
             responseData.setResult(header);
             responseData.setBody(restData);
+            
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception :", e);
             header.setResponseCode(StatusCode.Exception);
@@ -63,11 +65,11 @@ public class VideoSourceRest {
     }
 
     @PostMapping(value = "/v0/inquiry")
-    public ResponseData<JsonObject> inquiry(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+    public ResponseData<JsonObjectArray> inquiry(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         log.info(key+"============= Start VideoSourceRest Inquiry ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             int vdId = jsonNode.get("vdId").asInt();
@@ -84,6 +86,7 @@ public class VideoSourceRest {
             jsonObject.setInt("vdId", vdId);
             JsonObjectArray restData = this.videoSourceLTEService.inquiryByVdId(jsonObject);
             responseData.setBody(restData);
+            
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception", e);
             header.setResponseCode(StatusCode.Exception);
@@ -98,12 +101,12 @@ public class VideoSourceRest {
         return responseData;
     }
 
-    @PostMapping(value = "/v0/create")
+	@PostMapping(value = "/v0/create")
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         log.info(key+"============= Start VideoSourceRest Create ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
@@ -115,11 +118,8 @@ public class VideoSourceRest {
             String videoSourceOnSchedule = jsonNode.get("videoSourceOnSchedule").asText();
             int videoSourcePart = jsonNode.get("videoSourcePart").asInt();
             String isEnd = jsonNode.get("isEnd").asText();
-            JsonNode fileInf = jsonNode.get("fileInfo");
-            String fileBits = "";
-            String fileName = "";
-            String fileExtension = "";
-
+            int resourceId = jsonNode.get("videoSourceId").asInt();
+            
             if (vdId <= 0) {
                 header.setResponseCode(StatusCode.NotFound);
                 header.setResponseMessage("invalidVdId");
@@ -135,39 +135,10 @@ public class VideoSourceRest {
                 header.setResponseMessage("invalidVideoSourcePart");
                 responseData.setResult(header);
                 return responseData;
-            } else if (fileInf == null) {
-                header.setResponseCode(StatusCode.NotFound);
-                header.setResponseMessage("invalidFileImage");
-                responseData.setResult(header);
-                return responseData;
-            } else if (fileInf != null) {
-                fileBits = fileInf.get("fileBits").asText();
-                fileName = fileInf.get("fileName").asText();
-                fileExtension = fileInf.get("fileExtension").asText();
-
-                if (fileBits == null || fileBits.equals("")) {
-                    header.setResponseCode(StatusCode.NotFound);
-                    header.setResponseMessage("invalidFileImage");
-                    responseData.setResult(header);
-                    return responseData;
-                } else if (fileName == null || fileName.equals("")) {
-                    header.setResponseCode(StatusCode.NotFound);
-                    header.setResponseMessage("invalidFileImage");
-                    responseData.setResult(header);
-                    return responseData;
-                } else if (fileExtension == null || fileExtension.equals("")) {
-                    header.setResponseCode(StatusCode.NotFound);
-                    header.setResponseMessage("invalidFileImage");
-                    responseData.setResult(header);
-                    return responseData;
-                }
             }
-
-            String path = "/uploads/video/"+vdName+"/";
-            int resourceId = this.writeFileService.writeFile(userId,fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
-
+            
             String scheduleYN = "N";
-            if (videoSourceOnSchedule !=null || !videoSourceOnSchedule.equals("")) {
+            if (videoSourceOnSchedule != null) {
                 scheduleYN = "Y";
             }
 
@@ -189,7 +160,6 @@ public class VideoSourceRest {
             int save = this.videoSourceLTEService.create(jsonObject);
             if (save > 0 ) {
                 responseData.setResult(header);
-                responseData.setBody(header);
                 log.info(key+"VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
                 return responseData;
             }
@@ -217,10 +187,12 @@ public class VideoSourceRest {
         log.info(key+"============= Start VideoSourceRest Inquiry Part ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
+        
         try{
-            int vdId = jsonNode.get("vdId").asInt();
+            
+        	int vdId = jsonNode.get("vdId").asInt();
             JsonObject jsonObject = new JsonObject();
             jsonObject.setInt("vdId", vdId);
             int part = this.videoSourceLTEService.inquiryPart(jsonObject);
@@ -230,6 +202,7 @@ public class VideoSourceRest {
             responseData.setBody(jsonResponse);
             log.info(key+"VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
             return responseData;
+            
         }catch (Exception | ValidatorException e) {
             log.error("Exception error :" , e);
             header.setResponseCode(StatusCode.Exception);
@@ -248,7 +221,7 @@ public class VideoSourceRest {
         log.info(key+"============= Start VideoSourceRest Update ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
@@ -286,12 +259,7 @@ public class VideoSourceRest {
                 String fileName = fileInf.get("fileName").asText();
                 String fileExtension = fileInf.get("fileExtension").asText();
 
-                if (fileInf == null) {
-                    header.setResponseCode(StatusCode.NotFound);
-                    header.setResponseMessage("invalidFileImage");
-                    responseData.setResult(header);
-                    return responseData;
-                } else if (fileInf != null) {
+                if (fileInf != null) {
                     if (fileBits.equals("")) {
                         header.setResponseCode(StatusCode.NotFound);
                         header.setResponseMessage("invalidFileImage");
@@ -336,7 +304,6 @@ public class VideoSourceRest {
             int update = this.videoSourceLTEService.update(jsonObject);
             if (update > 0 ) {
                 responseData.setResult(header);
-                responseData.setBody(header);
                 log.info(key+"VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
 
                 if (isSelectedFile == true) {
@@ -369,7 +336,7 @@ public class VideoSourceRest {
         log.info(key+"============= Start VideoSourceRest Delete ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"VideoRest delete Data from http client :"+objectMapper.writeValueAsString(jsonNode));
@@ -384,7 +351,6 @@ public class VideoSourceRest {
                 int update = this.videoSourceLTEService.delete(jsonObject);
                 if (update > 0) {
                     responseData.setResult(header);
-                    responseData.setBody(header);
                     log.info(key+"Delete Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }

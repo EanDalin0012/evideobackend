@@ -53,11 +53,11 @@ public class UserRest {
     }
 
     @GetMapping(value = "/v0/read")
-    public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, ValidatorException {
+    public ResponseData<JsonObjectArray> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, ValidatorException {
         log.info(key+"============= Start VideoRest Read ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             JsonObject jsonObject = new JsonObject();
@@ -82,7 +82,7 @@ public class UserRest {
 
     @PostMapping(value = "/v0/checkUserName")
     public ResponseData<JsonObject> checkUserName(@RequestBody JsonNode jsonNode, @RequestParam("lang") String lang, @RequestParam("date") String date) {
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             String userName = jsonNode.get("userName").asText();
@@ -90,8 +90,6 @@ public class UserRest {
                 header.setResponseCode(StatusCode.Found);
                 header.setResponseMessage(StatusCode.Found);
                 responseData.setResult(header);
-                responseData.setResult(header);
-                responseData.setBody(header);
                 return responseData;
             }
             header.setResponseMessage("validUserName");
@@ -105,15 +103,13 @@ public class UserRest {
                 header.setResponseMessage(MessageCode.Forbidden);
             }
         }
-
-        responseData.setBody(header);
         return responseData;
     }
 
 
     @PostMapping(value = "/v0/loadUser")
     public ResponseData<JsonObject> loadUserByUserName(@RequestBody JsonObject jsonObject, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, ValidatorException {
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -137,6 +133,7 @@ public class UserRest {
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
             responseData.setResult(header);
+            
             if (e.getMessage().equals(MessageCode.Forbidden)) {
                 header.setResponseCode(StatusCode.Forbidden);
                 header.setResponseMessage(MessageCode.Forbidden);
@@ -148,7 +145,7 @@ public class UserRest {
 
     @PostMapping(value = "/v0/loadUserById")
     public ResponseData<JsonObject> loadUserByUserId(@RequestBody JsonNode jsonNode, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, ValidatorException {
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -185,7 +182,7 @@ public class UserRest {
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
         try {
@@ -199,12 +196,9 @@ public class UserRest {
             String remark   = jsonNode.get("remark").asText();
             int roleId      = jsonNode.get("roleId").asInt();
             String address  = jsonNode.get("address").asText();
+            int sourceId = jsonNode.get("sourceId").asInt();
             int id          = this.userService.count();
 
-            JsonNode fileInf = jsonNode.get("fileInfo");
-            String fileBits = "";
-            String fileName = "";
-            String fileExtension = "";
 
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             String passwordEncoder  = bCryptPasswordEncoder.encode(password);
@@ -215,31 +209,13 @@ public class UserRest {
                 header.setResponseMessage("userReadyHave");
                 responseData.setResult(header);
                 return responseData;
-            } else if (fileInf != null) {
-                fileBits = fileInf.get("fileBits").asText();
-                fileName = fileInf.get("fileName").asText();
-                fileExtension = fileInf.get("fileExtension").asText();
-
-                if (fileBits == null || fileBits.equals("")) {
-                    header.setResponseCode(StatusCode.NotFound);
-                    header.setResponseMessage("invalidFileImage");
-                    responseData.setResult(header);
-                    return responseData;
-                } else if (fileName == null || fileName.equals("")) {
-                    header.setResponseCode(StatusCode.NotFound);
-                    header.setResponseMessage("invalidFileImage");
-                    responseData.setResult(header);
-                    return responseData;
-                } else if (fileExtension == null || fileExtension.equals("")) {
-                    header.setResponseCode(StatusCode.NotFound);
-                    header.setResponseMessage("invalidFileImage");
-                    responseData.setResult(header);
-                    return responseData;
-                }
-                String path = "/uploads/profile-upload/";
-                resourceId = this.writeFileService.writeFile(userId, fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
+            } else if (sourceId <= 0) {
+           	 header.setResponseCode(StatusCode.NotFound);
+             header.setResponseMessage("invalidFileImage");
+             responseData.setResult(header);
+             return responseData;
             }
-
+            
             String localDate = CurrentDateUtil.get();
             JsonObject user = new JsonObject();
             user.setInt("id", id);
@@ -278,7 +254,6 @@ public class UserRest {
             if (save > 0) {
                 transactionManager.commit(transactionStatus);
                 responseData.setResult(header);
-                responseData.setBody(header);
                 return responseData;
             }
 
@@ -301,7 +276,7 @@ public class UserRest {
     public ResponseData<JsonObject> update(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
         try {
@@ -393,7 +368,6 @@ public class UserRest {
             if (update > 0 ) {
                 transactionManager.commit(transactionStatus);
                 responseData.setResult(header);
-                responseData.setBody(header);
                 if (isSelectedFile == true) {
                     JsonObject input = new JsonObject();
                     input.setInt("id", jsonNode.get("resourceId").asInt());
@@ -424,7 +398,7 @@ public class UserRest {
     @PostMapping(value = "/v0/delete")
     public ResponseData<JsonObject> delete(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
 
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             int userID = jsonNode.get("userId").asInt();
@@ -435,7 +409,6 @@ public class UserRest {
             jsonObject.setString("modifyAt", localDate);
             int delete = this.userService.deleteUser(jsonObject);
             if (delete > 0) {
-                responseData.setBody(header);
                 responseData.setResult(header);
                 return responseData;
             }
@@ -457,7 +430,7 @@ public class UserRest {
     @PostMapping(value = "/v0/enableStatus")
     public ResponseData<JsonObject> enableStatus(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
 
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             int userID = jsonNode.get("userId").asInt();
@@ -477,7 +450,6 @@ public class UserRest {
             jsonObject.setBoolean("enable", enable);
             int enableStatus = this.userService.enableStatus(jsonObject);
             if (enableStatus > 0) {
-                responseData.setBody(header);
                 responseData.setResult(header);
                 return responseData;
             }
@@ -498,7 +470,7 @@ public class UserRest {
     @PostMapping(value = "/v0/changePassword")
     public ResponseData<JsonObject> changePassword(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
 
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             int userID = jsonNode.get("userId").asInt();
@@ -525,7 +497,6 @@ public class UserRest {
             jsonObject.setString("password", passwordEncoder);
             int enableStatus = this.userService.changePassword(jsonObject);
             if (enableStatus > 0) {
-                responseData.setBody(header);
                 responseData.setResult(header);
                 return responseData;
             }

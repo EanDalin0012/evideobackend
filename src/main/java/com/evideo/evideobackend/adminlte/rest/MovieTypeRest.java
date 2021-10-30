@@ -34,13 +34,13 @@ public class MovieTypeRest {
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
 
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"Movie Type Rest Client Request Data : "+objectMapper.writeValueAsString(jsonNode));
 
             int id = this.movieTypeService.count();
-            String fullName = jsonNode.get("fullName").asText();
+//            String fullName = jsonNode.get("fullName").asText();
 
             String name = jsonNode.get("name").asText();
             String remark = jsonNode.get("remark").asText();
@@ -61,7 +61,6 @@ public class MovieTypeRest {
                 int save = this.movieTypeService.create(jsonObject);
                 if (save > 0) {
                     responseData.setResult(header);
-                    responseData.setBody(header);
                     log.info(key+"Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }
@@ -72,6 +71,12 @@ public class MovieTypeRest {
             log.error(key+"Exception :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
+            
             responseData.setResult(header);
         }
         log.info(key+"Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
@@ -79,9 +84,9 @@ public class MovieTypeRest {
     }
 
     @GetMapping(value = "/v0/read")
-    public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+    public ResponseData<JsonObjectArray> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             JsonObject jsonObject = new JsonObject();
@@ -103,7 +108,7 @@ public class MovieTypeRest {
     @PostMapping(value = "/v0/delete")
     public ResponseData<JsonObject> delete(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
@@ -119,7 +124,6 @@ public class MovieTypeRest {
                 int update = this.movieTypeService.delete(jsonObject);
                 if (update > 0) {
                     responseData.setResult(header);
-                    responseData.setBody(header);
                     log.info(key+"Delete Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }
@@ -132,6 +136,12 @@ public class MovieTypeRest {
             log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
+            
         }
         responseData.setResult(header);
         log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
@@ -141,7 +151,7 @@ public class MovieTypeRest {
     @PostMapping(value = "/v0/update")
     public ResponseData<JsonObject> update(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
@@ -160,7 +170,6 @@ public class MovieTypeRest {
                 int update = this.movieTypeService.update(jsonObject);
                 if (update > 0) {
                     responseData.setResult(header);
-                    responseData.setBody(header);
                     return responseData;
                 }
             } else {
@@ -171,6 +180,12 @@ public class MovieTypeRest {
             log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
+            
         }
         responseData.setResult(header);
         return responseData;
@@ -179,7 +194,7 @@ public class MovieTypeRest {
     @PostMapping(value = "/v0/updateStatusYN")
     public ResponseData<JsonObject> updateStatusYN(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
@@ -202,7 +217,6 @@ public class MovieTypeRest {
                 int update = this.movieTypeService.updateStatusYN(jsonObject);
                 if (update > 0) {
                     responseData.setResult(header);
-                    responseData.setBody(header);
                     log.info(key+"updateStatusYN Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }
@@ -215,10 +229,12 @@ public class MovieTypeRest {
             log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            
             if (e.getMessage().equals(MessageCode.Forbidden)) {
                 header.setResponseCode(StatusCode.Forbidden);
                 header.setResponseMessage(MessageCode.Forbidden);
             }
+            
         }
         responseData.setResult(header);
         log.info(key+"Delete Fail. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));

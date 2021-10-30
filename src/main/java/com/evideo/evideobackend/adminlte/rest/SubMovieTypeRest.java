@@ -35,7 +35,7 @@ public class SubMovieTypeRest {
         log.info(key+"Start SubMovieTypeRest create");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"Sub Movie Type Rest Client Request Data : "+objectMapper.writeValueAsString(jsonNode));
@@ -59,7 +59,6 @@ public class SubMovieTypeRest {
                 int save = this.subMovieTypeService.create(jsonObject);
                 if (save > 0) {
                     responseData.setResult(header);
-                    responseData.setBody(header);
                     log.info(key+"Sub Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }
@@ -70,10 +69,12 @@ public class SubMovieTypeRest {
             log.error("Exception :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            
             if (e.getMessage().equals(MessageCode.Forbidden)) {
                 header.setResponseCode(StatusCode.Forbidden);
                 header.setResponseMessage(MessageCode.Forbidden);
             }
+            
             responseData.setResult(header);
         }
         log.info(key+"Movie Type Response to Http Client : "+objectMapper.writeValueAsString(responseData));
@@ -81,11 +82,11 @@ public class SubMovieTypeRest {
     }
 
     @GetMapping(value = "/v0/read")
-    public ResponseData<JsonObject> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
+    public ResponseData<JsonObjectArray> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException {
         log.info(key+"Start SubMovieTypeRest read");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             JsonObject jsonObject = new JsonObject();
@@ -112,7 +113,7 @@ public class SubMovieTypeRest {
         log.info(key+"Start SubMovieTypeRest delete");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
 
         try {
@@ -128,7 +129,6 @@ public class SubMovieTypeRest {
                 int update = this.subMovieTypeService.delete(jsonObject);
                 if (update > 0) {
                     responseData.setResult(header);
-                    responseData.setBody(header);
                     log.info(key+"Delete Success. Data Response to http Client :"+objectMapper.writeValueAsString(responseData));
                     return responseData;
                 }
@@ -141,6 +141,7 @@ public class SubMovieTypeRest {
             log.error(key+"Exception Error delete :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            
             if (e.getMessage().equals(MessageCode.Forbidden)) {
                 header.setResponseCode(StatusCode.Forbidden);
                 header.setResponseMessage(MessageCode.Forbidden);
@@ -156,7 +157,7 @@ public class SubMovieTypeRest {
         log.info(key+"Start SubMovieTypeRest update");
 
         ObjectMapper objectMapper = new ObjectMapper();
-        ResponseData responseData = new ResponseData();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
             log.info(key+"Data from http client :"+objectMapper.writeValueAsString(jsonNode));
@@ -175,7 +176,6 @@ public class SubMovieTypeRest {
                 int update = this.subMovieTypeService.update(jsonObject);
                 if (update > 0) {
                     responseData.setResult(header);
-                    responseData.setBody(header);
                     return responseData;
                 }
             } else {
@@ -186,6 +186,7 @@ public class SubMovieTypeRest {
             log.error("Exception Error delete :", e);
             header.setResponseCode(StatusCode.Exception);
             header.setResponseMessage(StatusCode.Exception);
+            
             if (e.getMessage().equals(MessageCode.Forbidden)) {
                 header.setResponseCode(StatusCode.Forbidden);
                 header.setResponseMessage(MessageCode.Forbidden);
