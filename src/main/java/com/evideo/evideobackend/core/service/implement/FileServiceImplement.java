@@ -6,20 +6,10 @@ import com.evideo.evideobackend.core.exception.ValidatorException;
 import com.evideo.evideobackend.core.service.FileService;
 import com.evideo.evideobackend.core.util.ValidatorUtil;
 import org.springframework.stereotype.Service;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
 
 @Service
 public class FileServiceImplement implements FileService {
 
-    @Value("${upload.path}")
-    private String uploadPath;
     
 	final FileDao fileDao;
 
@@ -48,18 +38,5 @@ public class FileServiceImplement implements FileService {
         ValidatorUtil.validate(jsonObject, "id");
         return this.fileDao.delete(jsonObject);
     }
-    
-    public void save(MultipartFile file) throws Exception {
-        try {
-            Path root = Paths.get("D:\\my-vd");
-            Path resolve = root.resolve(file.getOriginalFilename());
-            if (resolve.toFile()
-                       .exists()) {
-            	throw new Exception();
-            }
-            Files.copy(file.getInputStream(), resolve);
-        } catch (Exception e) {
-            throw e;
-        }
-    }
+
 }

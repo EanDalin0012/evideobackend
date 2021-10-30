@@ -16,9 +16,9 @@ spring:
   servlet:
     multipart:
       enabled: true
-      file-size-threshold: 5000MB
-      max-file-size: 2000000MB
-      max-request-size: 250000MB
+      file-size-threshold: 500000MB
+      max-file-size: 800000MB
+      max-request-size: 700000MB
 
   jackson:
     serialization:
