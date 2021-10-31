@@ -233,8 +233,8 @@ public class VideoSourceRest {
             String videoSourceOnSchedule = jsonNode.get("videoSourceOnSchedule").asText();
             int videoSourcePart     = jsonNode.get("videoSourcePart").asInt();
             String isEnd            = jsonNode.get("isEnd").asText();
-            boolean isSelectedFile  = jsonNode.get("isSelectedFileW").asBoolean();
-            int resourceId          = jsonNode.get("resourceId").asInt();
+            int resourceId          = jsonNode.get("videoSourceId").asInt();
+            int oldVideoSourceId	= jsonNode.get("oldVideoSourceId").asInt();
 
             if (vdId <= 0) {
                 header.setResponseCode(StatusCode.NotFound);
@@ -252,35 +252,6 @@ public class VideoSourceRest {
                 responseData.setResult(header);
                 return responseData;
             }
-
-            if (isSelectedFile == true) {
-                JsonNode fileInf = jsonNode.get("fileInfo");
-                String fileBits = fileInf.get("fileBits").asText();
-                String fileName = fileInf.get("fileName").asText();
-                String fileExtension = fileInf.get("fileExtension").asText();
-
-                if (fileInf != null) {
-                    if (fileBits.equals("")) {
-                        header.setResponseCode(StatusCode.NotFound);
-                        header.setResponseMessage("invalidFileImage");
-                        responseData.setResult(header);
-                        return responseData;
-                    } else if (fileName.equals("")) {
-                        header.setResponseCode(StatusCode.NotFound);
-                        header.setResponseMessage("invalidFileImage");
-                        responseData.setResult(header);
-                        return responseData;
-                    } else if ( fileExtension.equals("")) {
-                        header.setResponseCode(StatusCode.NotFound);
-                        header.setResponseMessage("invalidFileImage");
-                        responseData.setResult(header);
-                        return responseData;
-                    }
-                }
-                String path = "/uploads/images/"+vdName+"/";
-                resourceId = this.writeFileService.writeFile(userId, fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
-            }
-
 
             String scheduleYN = "Y";
             if (videoSourceOnSchedule.equals("")) {
@@ -304,14 +275,15 @@ public class VideoSourceRest {
             int update = this.videoSourceLTEService.update(jsonObject);
             if (update > 0 ) {
                 responseData.setResult(header);
-                log.info(key+"VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
-
-                if (isSelectedFile == true) {
+                
+                if (resourceId != oldVideoSourceId) {
                     JsonObject input = new JsonObject();
-                    input.setInt("id", jsonNode.get("resourceId").asInt());
+                    input.setInt("id", oldVideoSourceId);
                     this.eventPublisher.publishEvent(new RemoveFileEvent(input));
                 }
-
+                
+                log.info(key+"VideoSourceRest Response data to http client :"+objectMapper.writeValueAsString(responseData));
+                
                 return responseData;
             }
             header.setResponseCode(StatusCode.NotFound);

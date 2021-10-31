@@ -35,6 +35,7 @@ import java.nio.file.AccessDeniedException;
 public class UserRest {
     static Logger log = Logger.getLogger(UserRest.class.getName());
     private static String key;
+    
     @Inject
     private ApplicationEventPublisher eventPublisher;
 
@@ -43,6 +44,7 @@ public class UserRest {
     final AuthorizationDao authorizationDao;
     final WriteFileServiceImplement writeFileService;
     final AuthorizationServiceImplement authorizationService;
+    
     UserRest(UserService userService, PlatformTransactionManager transactionManager, AuthorizationDao authorizationDao, WriteFileServiceImplement writeFileService, AuthorizationServiceImplement authorizationService) {
         this.userService = userService;
         this.transactionManager = transactionManager;
@@ -180,11 +182,13 @@ public class UserRest {
 
     @PostMapping(value = "/v0/create")
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
-
+    	log.info(key + "Start Create User Info ");
+    	
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        
         try {
             String fullName = jsonNode.get("fullName").asText();
             String gender   = jsonNode.get("gender").asText();
@@ -197,6 +201,7 @@ public class UserRest {
             int roleId      = jsonNode.get("roleId").asInt();
             String address  = jsonNode.get("address").asText();
             int sourceId = jsonNode.get("sourceId").asInt();
+            log.info(key + "sourceId : "+sourceId);
             int id          = this.userService.count();
 
 
@@ -226,7 +231,7 @@ public class UserRest {
             user.setString("phoneNumber", phoneNumber);
             user.setString("address", address);
             user.setString("remark", remark);
-            user.setInt("resourceId", resourceId);
+            user.setInt("resourceId", sourceId);
             user.setString("status", Status.active);
             user.setString("createAt", localDate);
             user.setString("gender",gender);
@@ -238,9 +243,12 @@ public class UserRest {
             user.setBoolean("accountLocked", false);
             user.setBoolean("credentialsExpired", false);
             user.setBoolean("isFirstLogin", true);
+            
             log.info(key + "User Info :"+objectMapper.writeValueAsString(user));
+            
             int save = this.userService.addNewUser(user);
             ArrayNode arrayNode  = (ArrayNode) jsonNode.get("authorizationModule");
+            
             if(arrayNode.isArray()) {
                 for(JsonNode json : arrayNode) {
                     JsonObject authority = new JsonObject();
@@ -274,7 +282,9 @@ public class UserRest {
 
     @PostMapping(value = "/v0/update")
     public ResponseData<JsonObject> update(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
-
+    	
+    	log.info(key + "Start Update User Info ");
+    	
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
@@ -289,44 +299,8 @@ public class UserRest {
             String remark   = jsonNode.get("remark").asText();
             int roleId      = jsonNode.get("roleId").asInt();
             int id          = jsonNode.get("id").asInt();
-            boolean isSelectedFile = jsonNode.get("selectedFile").asBoolean();
-
-            int resourceId = jsonNode.get("resourceId").asInt();;
-            if (isSelectedFile) {
-                JsonNode fileInf = jsonNode.get("fileInfo");
-                log.info(key + "VideoRest jsonObject :"+objectMapper.writeValueAsString(fileInf).substring(0,30));
-                String fileBits = fileInf.get("fileBits").asText();
-                String fileName = fileInf.get("fileName").asText();
-                String fileExtension = fileInf.get("fileExtension").asText();
-
-                if (fileInf == null) {
-                    header.setResponseCode(StatusCode.NotFound);
-                    header.setResponseMessage("invalidFileImage");
-                    responseData.setResult(header);
-                    return responseData;
-                } else if (fileInf != null) {
-                    if (fileBits.equals("")) {
-                        header.setResponseCode(StatusCode.NotFound);
-                        header.setResponseMessage("invalidFileImage");
-                        responseData.setResult(header);
-                        return responseData;
-                    } else if (fileName.equals("")) {
-                        header.setResponseCode(StatusCode.NotFound);
-                        header.setResponseMessage("invalidFileImage");
-                        responseData.setResult(header);
-                        return responseData;
-                    } else if ( fileExtension.equals("")) {
-                        header.setResponseCode(StatusCode.NotFound);
-                        header.setResponseMessage("invalidFileImage");
-                        responseData.setResult(header);
-                        return responseData;
-                    }
-                }
-                String path = "/uploads/profile-upload/";
-                resourceId = this.writeFileService.writeFile(userId, fileName.replaceAll("\\s+",""), fileExtension, path, fileBits);
-            }
-
-
+            int sourceId 	= jsonNode.get("sourceId").asInt();
+            int oldSourceId = jsonNode.get("oldSourceId").asInt();
 
             String localDate = CurrentDateUtil.get();
             JsonObject user = new JsonObject();
@@ -337,7 +311,7 @@ public class UserRest {
             user.setString("phoneNumber", phoneNumber);
             user.setString("address", address);
             user.setString("remark", remark);
-            user.setInt("resourceId", resourceId);
+            user.setInt("resourceId", sourceId);
             user.setString("status", Status.modify);
             user.setString("modifyAt", localDate);
             user.setString("gender",gender);
@@ -368,11 +342,13 @@ public class UserRest {
             if (update > 0 ) {
                 transactionManager.commit(transactionStatus);
                 responseData.setResult(header);
-                if (isSelectedFile == true) {
+                
+                if (sourceId != oldSourceId) {
                     JsonObject input = new JsonObject();
-                    input.setInt("id", jsonNode.get("resourceId").asInt());
+                    input.setInt("id", oldSourceId);
                     this.eventPublisher.publishEvent(new RemoveFileEvent(input));
                 }
+                
                 return responseData;
             }
 

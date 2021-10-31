@@ -151,21 +151,27 @@
                     id
                     , account_expired
                     , account_locked
+                    
                     , credentials_expired
                     , enabled
-                    , "password"
+                    , password
+                    
                     , user_name
                     , status
                     , create_date
+                    
                     , create_by
                     , full_name
                     , gender
+                    
                     , date_birth
                     , phone_number
                     , resource_id
+                    
                     , is_first_login
                     , remark
                     , address
+                    
                     , role_id
                 )
             VALUES
@@ -173,21 +179,27 @@
                  #{id}
                 , #{accountExpired}
                 , #{accountLocked}
+                
                 , #{credentialsExpired}
                 , #{enabled}
                 , #{password}
+                
                 , #{userName}
                 , #{status}
                 , #{createAt}
+                
                 , #{userId}
                 , #{fullName}
                 , #{gender}
+                
                 , #{dateBirth}
                 , #{phoneNumber}
                 , #{resourceId}
+                
                 , #{isFirstLogin}
                 , #{remark}
                 , #{address}
+                
                 , #{roleId}
             );
     	]]>

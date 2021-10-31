@@ -3,6 +3,7 @@ package com.evideo.evideobackend.core.rest;
 import java.io.File;
 import java.io.IOException;
 import org.apache.log4j.Logger;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.evideo.evideobackend.adminlte.event.RemoveFileEvent;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.Status;
@@ -34,6 +37,9 @@ public class FilesController {
 	static Logger log = Logger.getLogger(FilesController.class.getName());
 	private static String key;
 	
+//    @Inject
+//    private ApplicationEventPublisher eventPublisher;
+
 	@Inject
     private Environment env;
     
@@ -46,6 +52,7 @@ public class FilesController {
     
     @PostMapping("/video/upload") // //new annotation since 4.3
     public  ResponseData<JsonObject> singleFileUpload(@RequestParam("file") MultipartFile file,  @RequestParam("title") String title, @RequestParam("fileUpload") String fileUpload, @RequestParam("userId") int userId, RedirectAttributes redirectAttributes) throws ParseException {
+    	
     	log.info(key + "FilesController Start");
     	ObjectMapper mapper = new ObjectMapper();
         ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
@@ -60,6 +67,13 @@ public class FilesController {
         }
         
         try {
+//        	int sourceIdInt = Integer.parseInt(sourceId);
+//        	log.info(key + "Source Id :"+sourceId);
+//        	if(sourceIdInt > 0) {
+//        		JsonObject input = new JsonObject();
+//                input.setInt("id", sourceIdInt);
+//                this.eventPublisher.publishEvent(new RemoveFileEvent(input));
+//        	}
         	
         	String source = "/Unknows/uploads/";
         	if(fileUpload.equals("LstVideo")) {

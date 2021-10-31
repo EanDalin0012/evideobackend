@@ -1,6 +1,6 @@
 package com.evideo.evideobackend.adminlte.rest;
 
-//import com.evideo.evideobackend.adminlte.event.RemoveFileEvent;
+import com.evideo.evideobackend.adminlte.event.RemoveFileEvent;
 import com.evideo.evideobackend.adminlte.service.implement.VideoServiceImplement;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
@@ -17,9 +17,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
-//import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
-//import javax.inject.Inject;
+import javax.inject.Inject;
 
 @RestController
 @RequestMapping(value = "/api/video")
@@ -27,8 +27,8 @@ public class VideoRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
     private String key;
     
-//    @Inject
-//    private ApplicationEventPublisher eventPublisher;
+    @Inject
+    private ApplicationEventPublisher eventPublisher;
 
     final VideoServiceImplement videoService;
     final WriteFileServiceImplement writeFileService;
@@ -162,8 +162,9 @@ public class VideoRest {
             int subVdTypeId = jsonNode.get("subVdTypeId").asInt();
             String vdName = jsonNode.get("vdName").asText();
             String remark = jsonNode.get("remark").asText();
-            int resourceId = jsonNode.get("resourceId").asInt();
             int sourceId = jsonNode.get("sourceId").asInt();
+            int oldSourceId = jsonNode.get("oldSourceId").asInt();
+            
             
             if (vdId <= 0) {
                 header.setResponseCode(StatusCode.NotFound);
@@ -196,7 +197,7 @@ public class VideoRest {
             jsonObject.setInt("userId", userId);
             jsonObject.setInt("vdId", vdId);
             jsonObject.setInt("subVdTypeId", subVdTypeId);
-            jsonObject.setInt("resourceId", resourceId);
+            jsonObject.setInt("resourceId", sourceId);
             jsonObject.setString("vdName", vdName);
             jsonObject.setString("remark", remark);
             jsonObject.setString("modifyAt", localDate);
@@ -207,11 +208,11 @@ public class VideoRest {
             if (update > 0) {
                 responseData.setResult(header);
                 log.info(key+"Response data to http client :"+objectMapper.writeValueAsString(responseData));
-//                if (sourceId >= 0) {
-//                    JsonObject input = new JsonObject();
-//                    input.setInt("id", jsonNode.get("resourceId").asInt());
-//                    this.eventPublisher.publishEvent(new RemoveFileEvent(input));
-//                }
+                if (sourceId != oldSourceId) {
+                    JsonObject input = new JsonObject();
+                    input.setInt("id", oldSourceId);
+                    this.eventPublisher.publishEvent(new RemoveFileEvent(input));
+                }
                 return responseData;
             }
 
