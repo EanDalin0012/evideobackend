@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 public class RemoveFileEventListener implements ApplicationListener<RemoveFileEvent> {
     static Logger log = Logger.getLogger(HistoryUserLoginEventListener.class.getName());
     private String key;
+    
     @Inject
     private Environment env;
 

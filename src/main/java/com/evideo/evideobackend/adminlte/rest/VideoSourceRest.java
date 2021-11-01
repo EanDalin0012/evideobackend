@@ -33,6 +33,7 @@ public class VideoSourceRest {
 
     final WriteFileServiceImplement writeFileService;
     final VideoSourceLTEServiceImplement videoSourceLTEService;
+    
     VideoSourceRest(WriteFileServiceImplement writeFileService, VideoSourceLTEServiceImplement videoSourceLTEServiceImplement) {
         this.writeFileService = writeFileService;
         this.videoSourceLTEService = videoSourceLTEServiceImplement;

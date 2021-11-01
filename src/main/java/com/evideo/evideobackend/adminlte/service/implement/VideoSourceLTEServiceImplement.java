@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class VideoSourceLTEServiceImplement implements VideoSourceLTEService {
 
     final VideoSourceLTEDao videoSourceLTEDao;
+    
     VideoSourceLTEServiceImplement(VideoSourceLTEDao videoSourceLTEDao) {
         this.videoSourceLTEDao = videoSourceLTEDao;
     }
@@ -61,4 +62,16 @@ public class VideoSourceLTEServiceImplement implements VideoSourceLTEService {
         ValidatorUtil.validate(jsonObject,  "vdId", "status");
         return this.videoSourceLTEDao.inquiryByVdId(jsonObject);
     }
+
+	@Override
+	public JsonObjectArray inquirySchedule(JsonObject jsonObject) throws ValidatorException {
+		ValidatorUtil.validate(jsonObject, "status", "schedule", "scheduleYN");
+		return this.videoSourceLTEDao.inquirySchedule(jsonObject);
+	}
+
+	@Override
+	public int updateSchedule(JsonObject jsonObject) throws ValidatorException {
+		ValidatorUtil.validate(jsonObject, "id", "scheduleYN");
+		return this.videoSourceLTEDao.updateSchedule(jsonObject);
+	}
 }

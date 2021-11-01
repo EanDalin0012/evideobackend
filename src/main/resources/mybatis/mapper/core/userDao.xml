@@ -143,6 +143,39 @@
             WHERE u.id = #{userID}
 	     ]]>
     </select>
+    
+    <select id="inquiryUserById" resultType="JsonObject">
+        <![CDATA[
+            SELECT 
+				id
+				, account_expired		as "accountExpired"
+				, account_locked		as "accountLocked"
+				, credentials_expired	as "credentialsExpired"
+				, enabled
+				, user_name				as "userName"
+				, status
+				, create_date			as "createDate"
+				, create_by				as "createBy"
+				, modify_date			as "modifyDate"
+				, modify_by				as "modifyBy"
+				, last_login_date		as "lastLoginDate"
+				, last_login_time		as "lastLoginTime"
+				, full_name				as "fullName"
+				, gender
+				, date_birth			as "dateBirth"
+				, phone_number			as "phoneNumber"
+				, resource_id			as "resourceId"
+				, is_online
+				, is_first_login		as "isFirstLogin"
+				, remark
+				, address
+				, identify_info_id		as "identifyInfoId"
+				, identify_info_resource_id	as "identifyInfoResourceId"
+				, role_id				as "roleId"
+			FROM public.user_
+			WHERE id = #{id};
+	     ]]>
+    </select>
 
     <insert id="addNewUser">
         <![CDATA[

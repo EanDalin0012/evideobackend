@@ -89,4 +89,10 @@ public class UserService implements UserInterface {
         ValidatorUtil.validate(jsonObject, "status", "userId", "modifyAt", "password");
         return this.userDao.changePassword(jsonObject);
     }
+
+	@Override
+	public JsonObject inquiryUserById(JsonObject jsonObject) throws ValidatorException {
+		ValidatorUtil.validate(jsonObject, "id");
+		return this.userDao.inquiryUserById(jsonObject);
+	}
 }

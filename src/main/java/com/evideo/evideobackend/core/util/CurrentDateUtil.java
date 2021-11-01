@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class CurrentDateUtil {
+	
     public static Date getLocalDateTime() throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MMM-dd hh:mm:ss");
         simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -22,6 +23,12 @@ public class CurrentDateUtil {
     }
 
 
+    public static String getLocalDateTime(String pattern) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+        simpleDateFormat.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        return simpleDateFormat.format(simpleDateFormat.format(new Date()));
+    }
+    
     public static String get() throws ParseException {
         String pattern = "yyyyMMdd hh:mm:ss";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);

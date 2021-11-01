@@ -125,6 +125,7 @@ public class VideoRest {
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
+        
         try {
             JsonObject jsonObject = new JsonObject();
             jsonObject.setString("status", Status.delete);
@@ -142,6 +143,7 @@ public class VideoRest {
             }
             responseData.setResult(header);
         }
+        
         log.info("Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }

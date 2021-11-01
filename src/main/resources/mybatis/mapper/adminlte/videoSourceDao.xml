@@ -41,7 +41,25 @@
             FROM vd_source
             where status != #{status} and vd_id = #{vdId}
             order by part DESC;
-
+	     ]]>
+    </select>
+    
+    <select id="inquirySchedule" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+				id
+				, vd_id         as "vdId"
+				, part
+				, is_end        as "isEnd"
+				, source_vd_id  as "sourceVdId"
+				, schedule_enable   as "scheduleEnable"
+				, status
+				, schedule_yn       as "scheduleYN"
+			FROM vd_source
+			where schedule_enable <= #{schedule} and schedule_enable != ''
+			and schedule_yn = 'Y' 
+			and status != #{status}
+			order by part DESC;
 	     ]]>
     </select>
 
@@ -78,6 +96,17 @@
 
 	     ]]>
     </insert>
+    
+        <update id="updateSchedule">
+        <![CDATA[
+            UPDATE vd_source
+            SET
+                schedule_enable     = ''
+                , schedule_yn       = #{scheduleYN}
+            WHERE id                = #{id}
+    	]]>
+    </update>
+    
 
     <update id="update">
         <![CDATA[

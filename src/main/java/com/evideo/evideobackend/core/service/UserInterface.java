@@ -18,4 +18,5 @@ public interface UserInterface {
     int deleteUser(JsonObject jsonObject) throws ValidatorException;
     int enableStatus(JsonObject jsonObject) throws ValidatorException;
     int changePassword(JsonObject jsonObject) throws ValidatorException;
+    JsonObject inquiryUserById(JsonObject jsonObject) throws ValidatorException;
 }

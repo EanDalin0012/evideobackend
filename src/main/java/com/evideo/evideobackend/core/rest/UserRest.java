@@ -56,18 +56,57 @@ public class UserRest {
 
     @GetMapping(value = "/v0/read")
     public ResponseData<JsonObjectArray> read(@RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, ValidatorException {
-        log.info(key+"============= Start VideoRest Read ============");
+        log.info(key+"============= Start User Read ============");
 
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData<JsonObjectArray> responseData = new ResponseData<JsonObjectArray>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
+        
         try {
+        	
             JsonObject jsonObject = new JsonObject();
             jsonObject.setString("status", Status.delete);
             jsonObject.setInt("id", userId);
             JsonObjectArray restData = this.userService.read(jsonObject);
             responseData.setResult(header);
             responseData.setBody(restData);
+            
+        }catch (Exception | ValidatorException e) {
+            log.error(key+"VideoRest Exception :",e);
+            header.setResponseCode(StatusCode.Exception);
+            header.setResponseMessage(e.getMessage());
+            if (e.getMessage().equals(MessageCode.Forbidden)) {
+                header.setResponseCode(StatusCode.Forbidden);
+                header.setResponseMessage(MessageCode.Forbidden);
+            }
+            responseData.setResult(header);
+        }
+        
+        log.info("Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
+        return responseData;
+    }
+    
+    @GetMapping(value = "/v0/inquiryUserById/{userID}")
+    public ResponseData<JsonObject> inquiryUserById(@PathVariable("userID") int userID, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, ValidatorException {
+        
+    	log.info(key+"============= Start Inquiry User By Id ============");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
+        
+        try {
+            
+        	JsonObject jsonObject = new JsonObject();
+            jsonObject.setString("status", Status.delete);
+            jsonObject.setInt("id", userID);
+            
+            JsonObject restData = this.userService.inquiryUserById(jsonObject);
+            log.info(key + "Inquiry Data " +objectMapper.writeValueAsString(restData));
+            
+            responseData.setResult(header);
+            responseData.setBody(restData);
+            
         }catch (Exception | ValidatorException e) {
             log.error(key+"VideoRest Exception :",e);
             header.setResponseCode(StatusCode.Exception);
@@ -81,11 +120,16 @@ public class UserRest {
         log.info("Movie Type Rest Read Response Http Client Data :"+objectMapper.writeValueAsString(responseData));
         return responseData;
     }
+    
 
     @PostMapping(value = "/v0/checkUserName")
     public ResponseData<JsonObject> checkUserName(@RequestBody JsonNode jsonNode, @RequestParam("lang") String lang, @RequestParam("date") String date) {
-        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
+        
+    	log.info(key+"============= Start User Check User Name ============");
+    	
+    	ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
+        
         try {
             String userName = jsonNode.get("userName").asText();
             if (checkUserName(userName) == true) {
@@ -96,6 +140,7 @@ public class UserRest {
             }
             header.setResponseMessage("validUserName");
             responseData.setResult(header);
+            
         }catch (Exception e) {
             log.error(key+"Exception :", e);
             header.setResponseCode(StatusCode.Exception);
@@ -111,9 +156,14 @@ public class UserRest {
 
     @PostMapping(value = "/v0/loadUser")
     public ResponseData<JsonObject> loadUserByUserName(@RequestBody JsonObject jsonObject, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, ValidatorException {
-        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
+    	
+    	log.info(key+"============= Start Load User By User Name ============");
+    	
+    	ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
+        
         try {
+        	
             ObjectMapper objectMapper = new ObjectMapper();
             log.info(objectMapper.writeValueAsString(jsonObject));
             String userName = jsonObject.getString("userName");
@@ -147,8 +197,12 @@ public class UserRest {
 
     @PostMapping(value = "/v0/loadUserById")
     public ResponseData<JsonObject> loadUserByUserId(@RequestBody JsonNode jsonNode, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, ValidatorException {
-        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
+    	
+    	log.info(key+"============= Start Load User By User Id ============");
+    	
+    	ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
+       
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             log.info(objectMapper.writeValueAsString(jsonNode));
@@ -182,7 +236,8 @@ public class UserRest {
 
     @PostMapping(value = "/v0/create")
     public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
-    	log.info(key + "Start Create User Info ");
+    	
+    	log.info(key + "============= Start Create User Info =============");
     	
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
@@ -283,12 +338,13 @@ public class UserRest {
     @PostMapping(value = "/v0/update")
     public ResponseData<JsonObject> update(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
     	
-    	log.info(key + "Start Update User Info ");
+    	log.info(key + "============= Start Update User Info =============");
     	
         ObjectMapper objectMapper = new ObjectMapper();
         ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         TransactionStatus transactionStatus = transactionManager.getTransaction(new DefaultTransactionDefinition());
+        
         try {
             String fullName = jsonNode.get("fullName").asText();
             String gender   = jsonNode.get("gender").asText();
@@ -374,6 +430,8 @@ public class UserRest {
     @PostMapping(value = "/v0/delete")
     public ResponseData<JsonObject> delete(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
 
+    	log.info(key + "============= Start delete User Info =============");
+    	
         ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
         try {
@@ -406,8 +464,11 @@ public class UserRest {
     @PostMapping(value = "/v0/enableStatus")
     public ResponseData<JsonObject> enableStatus(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
 
+    	log.info(key + "============= Start Enable Status User Info =============");
+    	
         ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
+        
         try {
             int userID = jsonNode.get("userId").asInt();
             boolean enable = jsonNode.get("enable").asBoolean();
@@ -431,6 +492,7 @@ public class UserRest {
             }
             header.setResponseCode(StatusCode.NotFound);
             header.setResponseMessage(MessageCode.NotFound);
+            
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception", e);
             header.setResponseCode(StatusCode.Exception);
@@ -446,8 +508,11 @@ public class UserRest {
     @PostMapping(value = "/v0/changePassword")
     public ResponseData<JsonObject> changePassword(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang, @RequestParam("date") String date) throws JsonProcessingException, AccessDeniedException {
 
+    	log.info(key + "============= Start Change Password User Info =============");
+    	
         ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
         Header header = new Header(StatusCode.Success, MessageCode.Success);
+        
         try {
             int userID = jsonNode.get("userId").asInt();
             String password = jsonNode.get("password").asText();
@@ -478,6 +543,7 @@ public class UserRest {
             }
             header.setResponseCode(StatusCode.NotFound);
             header.setResponseMessage(MessageCode.NotFound);
+            
         }catch (Exception | ValidatorException e) {
             log.error(key+"Exception", e);
             header.setResponseCode(StatusCode.Exception);
