@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.evideo.evideobackend.unsecur.web.dao.VideoUnsecurDao">
+
+    <select id="read" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+				v.id
+				, v.vd_name					as "VideoName"
+				, v.resource_id			as "resourceId"
+				, v.status
+				, v.vd_type_id			as "videoTypeId"
+				, vdt.vd_type				as "videoTypeName"
+				, v.vd_sub_type_id	as "videoSubTypeId"
+				, vdst.vd_sub_type	as "videoSubTypeName"
+			FROM vd as v
+			LEFT JOIN vd_type as vdt on vdt.id = v.vd_type_id
+			LEFT JOIN vd_sub_type as vdst on vdst.id = v.vd_sub_type_id
+			WHERE v.status != #{status}
+			ORDER BY v.id
+			LIMIT #{LIMIT} OFFSET #{OFFSET};
+	     ]]>
+    </select>
+    
+</mapper>

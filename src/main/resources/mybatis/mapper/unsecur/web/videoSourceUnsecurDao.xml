@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.evideo.evideobackend.unsecur.web.dao.VideoResourceUnsecurDao">
+
+    <select id="read" resultType="JsonObject">
+        <![CDATA[
+            SELECT
+                id
+                , vd_id         as "vdId"
+                , part
+                , is_end        as "isEnd"
+                , source_vd_id  as "sourceVdId"
+                , create_at     as "createAt"
+                , create_by     as "createBy"
+                , schedule_enable   as "scheduleEnable"
+                , status
+                , schedule_yn       as "scheduleYN"
+                , remark
+            FROM vd_source
+            where status != #{status} and vd_id = #{vdId}
+            order by part ASC;
+	     ]]>
+    </select>
+    
+</mapper>
