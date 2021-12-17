@@ -4,7 +4,7 @@ import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.events.HistoryUserLoginEvent;
 import com.evideo.evideobackend.core.exception.ValidatorException;
-import com.evideo.evideobackend.core.service.implement.DeviceInfoService;
+import com.evideo.evideobackend.core.service.impl.DeviceInfoService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationListener;

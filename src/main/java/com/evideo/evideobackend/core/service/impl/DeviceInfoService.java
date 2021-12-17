@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.core.service.implement;
+package com.evideo.evideobackend.core.service.impl;
 
 import com.evideo.evideobackend.core.dao.DeviceInfoDao;
 import com.evideo.evideobackend.core.dto.JsonObject;

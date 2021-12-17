@@ -10,7 +10,7 @@ import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.dto.ResponseData;
 import com.evideo.evideobackend.core.exception.ValidatorException;
-import com.evideo.evideobackend.core.service.implement.RoleServiceImplement;
+import com.evideo.evideobackend.core.service.impl.RoleServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
@@ -25,8 +25,8 @@ public class RoleRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
     private static String key;
 
-    final RoleServiceImplement roleService;
-    RoleRest(RoleServiceImplement roleService) {
+    final RoleServiceImpl roleService;
+    RoleRest(RoleServiceImpl roleService) {
         this.roleService = roleService;
         key = GenerateRandomPassword.key() + "::";
     }

@@ -5,7 +5,7 @@ import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.core.events.listeners.HistoryUserLoginEventListener;
 import com.evideo.evideobackend.core.exception.ValidatorException;
-import com.evideo.evideobackend.core.service.implement.FileServiceImplement;
+import com.evideo.evideobackend.core.service.impl.FileServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationListener;
@@ -25,8 +25,8 @@ public class RemoveFileEventListener implements ApplicationListener<RemoveFileEv
     @Inject
     private Environment env;
 
-    final FileServiceImplement fileService;
-    RemoveFileEventListener(FileServiceImplement fileService) {
+    final FileServiceImpl fileService;
+    RemoveFileEventListener(FileServiceImpl fileService) {
         this.fileService = fileService;
         key = GenerateRandomPassword.key() + "::";
     }

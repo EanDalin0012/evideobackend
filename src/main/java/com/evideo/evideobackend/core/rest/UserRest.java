@@ -11,9 +11,9 @@ import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.dto.ResponseData;
 import com.evideo.evideobackend.core.exception.ValidatorException;
-import com.evideo.evideobackend.core.service.implement.AuthorizationServiceImplement;
-import com.evideo.evideobackend.core.service.implement.UserService;
-import com.evideo.evideobackend.core.service.implement.WriteFileServiceImplement;
+import com.evideo.evideobackend.core.service.impl.AuthorizationServiceImpl;
+import com.evideo.evideobackend.core.service.impl.UserService;
+import com.evideo.evideobackend.core.service.impl.WriteFileServiceImpl;
 import com.evideo.evideobackend.core.util.CurrentDateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -42,10 +42,10 @@ public class UserRest {
     final PlatformTransactionManager transactionManager;
     final UserService userService;
     final AuthorizationDao authorizationDao;
-    final WriteFileServiceImplement writeFileService;
-    final AuthorizationServiceImplement authorizationService;
+    final WriteFileServiceImpl writeFileService;
+    final AuthorizationServiceImpl authorizationService;
     
-    UserRest(UserService userService, PlatformTransactionManager transactionManager, AuthorizationDao authorizationDao, WriteFileServiceImplement writeFileService, AuthorizationServiceImplement authorizationService) {
+    UserRest(UserService userService, PlatformTransactionManager transactionManager, AuthorizationDao authorizationDao, WriteFileServiceImpl writeFileService, AuthorizationServiceImpl authorizationService) {
         this.userService = userService;
         this.transactionManager = transactionManager;
         this.authorizationDao = authorizationDao;

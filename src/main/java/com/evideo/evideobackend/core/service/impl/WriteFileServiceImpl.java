@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.core.service.implement;
+package com.evideo.evideobackend.core.service.impl;
 
 import com.evideo.evideobackend.core.constant.Status;
 import com.evideo.evideobackend.core.dto.JsonObject;
@@ -15,14 +15,14 @@ import java.io.FileOutputStream;
 import java.util.UUID;
 
 @Service
-public class WriteFileServiceImplement implements WriteFileService {
-    static Logger log = Logger.getLogger(WriteFileServiceImplement.class.getName());
+public class WriteFileServiceImpl implements WriteFileService {
+    static Logger log = Logger.getLogger(WriteFileServiceImpl.class.getName());
 
     @Inject
     private Environment env;
-    final FileServiceImplement fileService;
+    final FileServiceImpl fileService;
 
-    WriteFileServiceImplement(FileServiceImplement fileService) {
+    WriteFileServiceImpl(FileServiceImpl fileService) {
         this.fileService = fileService;
     }
 

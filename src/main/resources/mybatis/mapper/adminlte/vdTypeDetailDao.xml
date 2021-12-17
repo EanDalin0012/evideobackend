@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.evideo.evideobackend.adminlte.dao.VdTypeDetailDao">
+
+    <select id="read" resultType="JsonObject">
+        <![CDATA[
+           SELECT 
+           		id
+           		, vd_type_id as "vdTypeId"
+           		, vd_sub_type_id as "vdSubTypeId"
+			FROM vd_type_dt;
+	     ]]>
+    </select>
+    
+   <select id="readVdSubType" resultType="JsonObject">
+      <![CDATA[
+         SELECT 
+         		id
+         		, vd_type_id as "vdTypeId"
+         		, vd_sub_type_id as "vdSubTypeId"
+		FROM vd_type_dt
+		where vd_type_id = #{vdTypeId}
+		;
+	    ]]>
+    </select>
+
+    <insert id="create">
+        <![CDATA[
+		  	INSERT INTO vd_type_dt
+			(
+				id
+				, vd_type_id
+				, vd_sub_type_id
+			)
+			VALUES(
+				#{id}
+				, #{vdTypeId}
+				, #{vdSubTypeId}
+				);
+
+	     ]]>
+    </insert>
+
+    <update id="update">
+        <![CDATA[
+            UPDATE vd_type_dt
+				SET vd_type_id		= #{vdTypeId}
+				, vd_sub_type_id	= #{vdSubTypeId}
+			WHERE id= #{id};
+    	]]>
+    </update>
+
+    <delete id="delete">
+        <![CDATA[
+            DELETE FROM vd_type_dt
+			WHERE id= #{id};
+    	]]>
+    </delete>
+
+    <select id="count" resultType="java.lang.Integer">
+        <![CDATA[
+		  	select coalesce(MAX(id), 0) FROM  vd_type_dt;
+	     ]]>
+    </select>
+
+
+</mapper>

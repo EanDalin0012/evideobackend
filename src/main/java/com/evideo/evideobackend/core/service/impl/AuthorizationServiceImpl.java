@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.core.service.implement;
+package com.evideo.evideobackend.core.service.impl;
 
 import com.evideo.evideobackend.core.dao.AuthorizationDao;
 import com.evideo.evideobackend.core.dto.JsonObject;
@@ -8,10 +8,10 @@ import com.evideo.evideobackend.core.util.ValidatorUtil;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AuthorizationServiceImplement implements AuthorizationService {
+public class AuthorizationServiceImpl implements AuthorizationService {
 
     final AuthorizationDao authorizationDao;
-    AuthorizationServiceImplement(AuthorizationDao authorizationDao) {
+    AuthorizationServiceImpl(AuthorizationDao authorizationDao) {
         this.authorizationDao = authorizationDao;
     }
 

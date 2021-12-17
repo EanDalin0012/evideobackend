@@ -55,9 +55,10 @@ public class ImageReaderRest {
 //                log.info(key+"full path : " + filepath);
 //                log.info(key+"full extension : " + fileExt);
                 File file = new File(filepath);
-                InputStream inputStream = new FileInputStream(file);
+
 
                 if (file.exists()) {
+                    InputStream inputStream = new FileInputStream(file);
                     if (fileExt.equalsIgnoreCase("JPG")) {
                         headers.setContentType(MediaType.IMAGE_JPEG);
                     } else if (fileExt.equalsIgnoreCase("PNG")) {

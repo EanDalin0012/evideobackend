@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.core.service.implement;
+package com.evideo.evideobackend.core.service.impl;
 
 import com.evideo.evideobackend.core.dao.RoleDao;
 import com.evideo.evideobackend.core.dto.JsonObject;
@@ -9,9 +9,9 @@ import com.evideo.evideobackend.core.util.ValidatorUtil;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleServiceImplement implements RoleService {
+public class RoleServiceImpl implements RoleService {
     final RoleDao roleDao;
-    RoleServiceImplement(RoleDao roleDao) {
+    RoleServiceImpl(RoleDao roleDao) {
         this.roleDao = roleDao;
     }
     @Override

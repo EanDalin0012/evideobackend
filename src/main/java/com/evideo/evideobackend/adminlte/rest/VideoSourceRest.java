@@ -11,7 +11,7 @@ import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.dto.ResponseData;
 import com.evideo.evideobackend.core.exception.ValidatorException;
-import com.evideo.evideobackend.core.service.implement.WriteFileServiceImplement;
+import com.evideo.evideobackend.core.service.impl.WriteFileServiceImpl;
 import com.evideo.evideobackend.core.util.CurrentDateUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -31,10 +31,10 @@ public class VideoSourceRest {
     @Inject
     private ApplicationEventPublisher eventPublisher;
 
-    final WriteFileServiceImplement writeFileService;
+    final WriteFileServiceImpl writeFileService;
     final VideoSourceLTEServiceImplement videoSourceLTEService;
     
-    VideoSourceRest(WriteFileServiceImplement writeFileService, VideoSourceLTEServiceImplement videoSourceLTEServiceImplement) {
+    VideoSourceRest(WriteFileServiceImpl writeFileService, VideoSourceLTEServiceImplement videoSourceLTEServiceImplement) {
         this.writeFileService = writeFileService;
         this.videoSourceLTEService = videoSourceLTEServiceImplement;
         key = GenerateRandomPassword.key();

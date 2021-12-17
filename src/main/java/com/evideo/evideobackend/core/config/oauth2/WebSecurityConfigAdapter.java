@@ -2,7 +2,7 @@ package com.evideo.evideobackend.core.config.oauth2;
 
 import com.evideo.evideobackend.core.encryption.Encoders;
 import com.evideo.evideobackend.core.provider.DefaultAuthenticationProvider;
-import com.evideo.evideobackend.core.service.implement.DefaultAuthenticationProviderService;
+import com.evideo.evideobackend.core.service.impl.DefaultAuthenticationProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;

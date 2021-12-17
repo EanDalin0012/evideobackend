@@ -1,8 +1,6 @@
 package com.evideo.evideobackend.core.constant;
 
-import com.evideo.evideobackend.core.service.implement.DefaultAuthenticationProviderService;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 
 import javax.inject.Inject;

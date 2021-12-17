@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.evideo.evideobackend.adminlte.dao.ClientSettingDAO">
+
+
+    <resultMap type="JsonObject" id="readMap">
+        <id property="id" column="id"/>
+        <result property="vd_type" column="vd_type"/>
+        <association property="video_sub_types" resultMap="authenticateAuthority" javaType="list"/>
+    </resultMap>
+
+    <resultMap type="JsonObject" id="authenticateAuthority">
+        <id property="sub_video_id" column="sub_video_id"/>
+        <result property="sub_video_name" column="sub_video_name"/>
+    </resultMap>
+
+    <select id="read" resultMap="readMap">
+        <![CDATA[
+			SELECT
+                t."id"
+                , t.vd_type
+                , st."id" as "sub_video_id"
+                , st.vd_sub_type as "sub_video_name"
+            FROM vd_type t
+            LEFT JOIN vd_type_dt dt on dt.vd_type_id = t."id"
+            LEFT JOIN vd_sub_type st on st."id" = dt.vd_sub_type_id;
+	   ]]>
+    </select>
+
+
+</mapper>

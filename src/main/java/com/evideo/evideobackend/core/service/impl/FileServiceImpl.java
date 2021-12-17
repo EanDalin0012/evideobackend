@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.core.service.implement;
+package com.evideo.evideobackend.core.service.impl;
 
 import com.evideo.evideobackend.core.dao.FileDao;
 import com.evideo.evideobackend.core.dto.JsonObject;
@@ -8,12 +8,12 @@ import com.evideo.evideobackend.core.util.ValidatorUtil;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FileServiceImplement implements FileService {
+public class FileServiceImpl implements FileService {
 
     
 	final FileDao fileDao;
 
-    FileServiceImplement(FileDao fileDao) {
+    FileServiceImpl(FileDao fileDao) {
         this.fileDao = fileDao;
     }
     @Override

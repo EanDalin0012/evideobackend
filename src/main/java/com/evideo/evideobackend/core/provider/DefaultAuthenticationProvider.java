@@ -4,7 +4,7 @@ import com.evideo.evideobackend.core.constant.DemoProperties;
 import com.evideo.evideobackend.core.dto.JsonObject;
 import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.encryption.EncryptionUtil;
-import com.evideo.evideobackend.core.service.implement.DefaultAuthenticationProviderService;
+import com.evideo.evideobackend.core.service.impl.DefaultAuthenticationProviderService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 import org.springframework.security.authentication.AuthenticationProvider;
