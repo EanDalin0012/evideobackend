@@ -27,5 +27,33 @@
 	   ]]>
     </select>
 
+    <insert id="insertVideoTypeDt">
+        <![CDATA[
+            INSERT INTO vd_type_dt
+            (
+                id
+                 , vd_type_id
+                , vd_sub_type_id
+            )
+            VALUES(
+                #{id}
+                ,#{videoTypeId}
+                , #{videoSubTypeId}
+            );
+        ]]>
+    </insert>
+
+    <delete id="deleteVideoTypeDt">
+        <![CDATA[
+            DELETE FROM vd_type_dt
+            WHERE vd_type_id = #{videoTypeId} and vd_sub_type_id = #{videoSubTypeId};
+        ]]>
+    </delete>
+
+    <select id="count" resultType="java.lang.Integer">
+        <![CDATA[
+            select coalesce(MAX(id), 0) FROM  vd_type_dt;
+          ]]>
+    </select>
 
 </mapper>

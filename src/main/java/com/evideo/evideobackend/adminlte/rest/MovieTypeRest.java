@@ -1,7 +1,7 @@
 package com.evideo.evideobackend.adminlte.rest;
 
 import com.evideo.evideobackend.adminlte.common.SettingClientStatus;
-import com.evideo.evideobackend.adminlte.service.implement.MovieTypeServiceImplement;
+import com.evideo.evideobackend.adminlte.service.impl.MovieTypeServiceImpl;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.Status;
@@ -24,8 +24,8 @@ public class MovieTypeRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
     private static String key;
 
-    final MovieTypeServiceImplement movieTypeService;
-    MovieTypeRest(MovieTypeServiceImplement movieTypeService) {
+    final MovieTypeServiceImpl movieTypeService;
+    MovieTypeRest(MovieTypeServiceImpl movieTypeService) {
         key = GenerateRandomPassword.key() + "::";
         this.movieTypeService = movieTypeService;
     }

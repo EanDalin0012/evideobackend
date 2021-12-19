@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import com.evideo.evideobackend.adminlte.service.implement.VdTypeDetailServiceImplement;
+import com.evideo.evideobackend.adminlte.service.impl.VdTypeDetailServiceImpl;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.StatusCode;
@@ -26,8 +26,8 @@ public class VdTypeDetailRest {
 	 static Logger log = Logger.getLogger(VdTypeDetailRest.class.getName());
 	 private static String key;
 	 
-	 final VdTypeDetailServiceImplement vdTypeDetailService;
-	 VdTypeDetailRest(VdTypeDetailServiceImplement detailService) {
+	 final VdTypeDetailServiceImpl vdTypeDetailService;
+	 VdTypeDetailRest(VdTypeDetailServiceImpl detailService) {
 		 this.vdTypeDetailService = detailService;
 		 key = GenerateRandomPassword.key() + "::";
 	 }

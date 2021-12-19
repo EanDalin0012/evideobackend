@@ -1,6 +1,6 @@
 package com.evideo.evideobackend.adminlte.rest;
 
-import com.evideo.evideobackend.adminlte.service.implement.SubMovieTypeServiceImplement;
+import com.evideo.evideobackend.adminlte.service.impl.SubMovieTypeServiceImpl;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.Status;
@@ -23,8 +23,8 @@ public class SubMovieTypeRest {
     static Logger log = Logger.getLogger(SubMovieTypeRest.class.getName());
     private static String key;
 
-    final SubMovieTypeServiceImplement subMovieTypeService;
-    SubMovieTypeRest(SubMovieTypeServiceImplement subMovieTypeService) {
+    final SubMovieTypeServiceImpl subMovieTypeService;
+    SubMovieTypeRest(SubMovieTypeServiceImpl subMovieTypeService) {
         this.subMovieTypeService = subMovieTypeService;
         key = GenerateRandomPassword.key() + "::";
     }

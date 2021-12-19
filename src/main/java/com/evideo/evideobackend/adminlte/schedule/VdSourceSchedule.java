@@ -1,19 +1,15 @@
 package com.evideo.evideobackend.adminlte.schedule;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
 import javax.inject.Inject;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import com.evideo.evideobackend.adminlte.event.UpdateVdSourceScheduleEvent;
-import com.evideo.evideobackend.adminlte.service.implement.VideoSourceLTEServiceImplement;
+import com.evideo.evideobackend.adminlte.service.impl.VideoSourceLTEServiceImpl;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.dto.JsonObject;
-import com.evideo.evideobackend.core.util.CurrentDateUtil;
 
 
 @Component
@@ -25,9 +21,9 @@ public class VdSourceSchedule {
     @Inject
     private ApplicationEventPublisher eventPublisher;
     
-    final VideoSourceLTEServiceImplement videoSourceLTEService;
+    final VideoSourceLTEServiceImpl videoSourceLTEService;
     
-    VdSourceSchedule(VideoSourceLTEServiceImplement videoSourceLTEService) {
+    VdSourceSchedule(VideoSourceLTEServiceImpl videoSourceLTEService) {
     	this.videoSourceLTEService = videoSourceLTEService;
     	key = GenerateRandomPassword.key() + "::";
     }

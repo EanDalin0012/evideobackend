@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.adminlte.service.implement;
+package com.evideo.evideobackend.adminlte.service.impl;
 
 import com.evideo.evideobackend.adminlte.dao.MovieDetailsDao;
 import com.evideo.evideobackend.adminlte.service.MovieDetailsService;
@@ -9,10 +9,10 @@ import com.evideo.evideobackend.core.util.ValidatorUtil;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MovieDetailsServiceImplement implements MovieDetailsService {
+public class MovieDetailsServiceImpl implements MovieDetailsService {
     final MovieDetailsDao movieDetailsDao;
 
-    MovieDetailsServiceImplement(MovieDetailsDao movieDetailsDao) {
+    MovieDetailsServiceImpl(MovieDetailsDao movieDetailsDao) {
         this.movieDetailsDao = movieDetailsDao;
     }
 

@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.adminlte.service.implement;
+package com.evideo.evideobackend.adminlte.service.impl;
 
 import com.evideo.evideobackend.adminlte.dao.VideoSourceLTEDao;
 import com.evideo.evideobackend.adminlte.service.VideoSourceLTEService;
@@ -10,11 +10,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
-public class VideoSourceLTEServiceImplement implements VideoSourceLTEService {
+public class VideoSourceLTEServiceImpl implements VideoSourceLTEService {
 
     final VideoSourceLTEDao videoSourceLTEDao;
     
-    VideoSourceLTEServiceImplement(VideoSourceLTEDao videoSourceLTEDao) {
+    VideoSourceLTEServiceImpl(VideoSourceLTEDao videoSourceLTEDao) {
         this.videoSourceLTEDao = videoSourceLTEDao;
     }
 

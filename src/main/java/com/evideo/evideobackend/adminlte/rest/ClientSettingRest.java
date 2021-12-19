@@ -1,8 +1,9 @@
 package com.evideo.evideobackend.adminlte.rest;
 
 import com.evideo.evideobackend.adminlte.dao.ClientSettingDAO;
-import com.evideo.evideobackend.adminlte.service.implement.MovieTypeServiceImplement;
-import com.evideo.evideobackend.adminlte.service.implement.SubMovieTypeServiceImplement;
+import com.evideo.evideobackend.adminlte.service.impl.ClientSettingServiceImpl;
+import com.evideo.evideobackend.adminlte.service.impl.MovieTypeServiceImpl;
+import com.evideo.evideobackend.adminlte.service.impl.SubMovieTypeServiceImpl;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.Status;
@@ -13,24 +14,22 @@ import com.evideo.evideobackend.core.dto.JsonObjectArray;
 import com.evideo.evideobackend.core.dto.ResponseData;
 import com.evideo.evideobackend.core.exception.ValidatorException;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = "/api/client-setting")
 public class ClientSettingRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
     private static String key;
-    final ClientSettingDAO clientSettingDAO;
-    final SubMovieTypeServiceImplement subMovieTypeService;
-    final MovieTypeServiceImplement movieTypeService;
-    ClientSettingRest(ClientSettingDAO clientSettingDAO, SubMovieTypeServiceImplement subMovieTypeService, MovieTypeServiceImplement movieTypeService) {
+    final ClientSettingServiceImpl clientSettingServiceImpl;
+    final SubMovieTypeServiceImpl subMovieTypeService;
+    final MovieTypeServiceImpl movieTypeService;
+    ClientSettingRest( ClientSettingServiceImpl clientSettingServiceImpl, SubMovieTypeServiceImpl subMovieTypeService, MovieTypeServiceImpl movieTypeService) {
         key = GenerateRandomPassword.key() + "::";
-        this.clientSettingDAO = clientSettingDAO;
+        this.clientSettingServiceImpl = clientSettingServiceImpl;
         this.subMovieTypeService = subMovieTypeService;
         this.movieTypeService = movieTypeService;
     }
@@ -46,9 +45,7 @@ public class ClientSettingRest {
                 JsonObjectArray videoSubTypes = this.subMovieTypeService.read(jsonObject);
                 JsonObjectArray videoTypes = this.movieTypeService.read(jsonObject);
 
-                JsonObjectArray lst = this.clientSettingDAO.read();
-
-
+                JsonObjectArray lst = this.clientSettingServiceImpl.read();
 
                 JsonObject rest = new JsonObject();
                 rest.setJsonObjectArray("video_sub_types", videoSubTypes);
@@ -63,4 +60,39 @@ public class ClientSettingRest {
         return responseData;
     }
 
+    @PostMapping(value = "/v0/updateVideoTypeDt")
+    public ResponseData<JsonObject> create(@RequestBody JsonNode jsonNode, @RequestParam("userId") int userId, @RequestParam("lang") String lang) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        ResponseData<JsonObject> responseData = new ResponseData<JsonObject>();
+        Header header = new Header(StatusCode.Success, MessageCode.Success);
+        try {
+            log.info(key + "jsonNode: "+objectMapper.writeValueAsString(jsonNode));
+            boolean checked = jsonNode.get("checked").asBoolean();
+            int videoTypeId = jsonNode.get("videoTypeId").asInt();
+            int videoSubTypeId = jsonNode.get("videoSubTypeId").asInt();
+
+            JsonObject param = new JsonObject();
+            param.setInt("id", this.clientSettingServiceImpl.count());
+            param.setInt("videoTypeId", videoTypeId);
+            param.setInt("videoSubTypeId", videoSubTypeId);
+            if (checked == true) {
+                int save = this.clientSettingServiceImpl.insertVideoTypeDt(param);
+                if (save > 0) {
+                    responseData.setResult(header);
+                    return responseData;
+                }
+            } else {
+                int delete = this.clientSettingServiceImpl.deleteVideoTypeDt(param);
+                if (delete > 0) {
+                    responseData.setResult(header);
+                    return responseData;
+                }
+            }
+
+        }catch (Exception | ValidatorException e) {
+            e.printStackTrace();
+        }
+        return responseData;
+    }
 }

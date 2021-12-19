@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.adminlte.service.implement;
+package com.evideo.evideobackend.adminlte.service.impl;
 
 import org.springframework.stereotype.Service;
 
@@ -10,10 +10,10 @@ import com.evideo.evideobackend.core.exception.ValidatorException;
 import com.evideo.evideobackend.core.util.ValidatorUtil;
 
 @Service
-public class VdTypeDetailServiceImplement implements VdTypeDetailService {
+public class VdTypeDetailServiceImpl implements VdTypeDetailService {
 	
 	final VdTypeDetailDao vdTypeDetailDao;
-	VdTypeDetailServiceImplement(VdTypeDetailDao vdTypeDetailDao) {
+	VdTypeDetailServiceImpl(VdTypeDetailDao vdTypeDetailDao) {
 		this.vdTypeDetailDao = vdTypeDetailDao;
 	}
 	

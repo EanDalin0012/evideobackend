@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Component;
 import com.evideo.evideobackend.adminlte.event.UpdateVdSourceScheduleEvent;
-import com.evideo.evideobackend.adminlte.service.implement.VideoSourceLTEServiceImplement;
+import com.evideo.evideobackend.adminlte.service.impl.VideoSourceLTEServiceImpl;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.Status;
 import com.evideo.evideobackend.core.dto.JsonObject;
@@ -22,9 +22,9 @@ public class UpdateVdSourceScheduleEventListener implements ApplicationListener<
 	static Logger log = Logger.getLogger(UpdateVdSourceScheduleEventListener.class.getName());
     private String key;
     
-    final VideoSourceLTEServiceImplement videoSourceLTEService;
+    final VideoSourceLTEServiceImpl videoSourceLTEService;
     
-    UpdateVdSourceScheduleEventListener(VideoSourceLTEServiceImplement videoSourceLTEService) {
+    UpdateVdSourceScheduleEventListener(VideoSourceLTEServiceImpl videoSourceLTEService) {
     	key = GenerateRandomPassword.key() + "::";
     	this.videoSourceLTEService = videoSourceLTEService;
     }

@@ -88,7 +88,7 @@
 
     <select id="count" resultType="java.lang.Integer">
         <![CDATA[
-		  select max(id) from vd_dt
+            select coalesce(MAX(id), 0) FROM  vd_dt;
 	     ]]>
     </select>
 

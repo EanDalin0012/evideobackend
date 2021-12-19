@@ -1,6 +1,6 @@
 package com.evideo.evideobackend.adminlte.rest;
 
-import com.evideo.evideobackend.adminlte.service.implement.MovieDetailsServiceImplement;
+import com.evideo.evideobackend.adminlte.service.impl.MovieDetailsServiceImpl;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.StatusCode;
@@ -22,8 +22,8 @@ public class MovieDetailsRest {
     static Logger log = Logger.getLogger(MovieTypeRest.class.getName());
     private String key;
     
-    final MovieDetailsServiceImplement movieDetailsService;
-    MovieDetailsRest(MovieDetailsServiceImplement movieDetailsService) {
+    final MovieDetailsServiceImpl movieDetailsService;
+    MovieDetailsRest(MovieDetailsServiceImpl movieDetailsService) {
         this.movieDetailsService = movieDetailsService;
         key = GenerateRandomPassword.key() + "::";
     }

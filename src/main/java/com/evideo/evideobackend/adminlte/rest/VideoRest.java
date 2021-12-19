@@ -1,7 +1,7 @@
 package com.evideo.evideobackend.adminlte.rest;
 
 import com.evideo.evideobackend.adminlte.event.RemoveFileEvent;
-import com.evideo.evideobackend.adminlte.service.implement.VideoServiceImplement;
+import com.evideo.evideobackend.adminlte.service.impl.VideoServiceImpl;
 import com.evideo.evideobackend.core.common.GenerateRandomPassword;
 import com.evideo.evideobackend.core.constant.MessageCode;
 import com.evideo.evideobackend.core.constant.Status;
@@ -30,10 +30,10 @@ public class VideoRest {
     @Inject
     private ApplicationEventPublisher eventPublisher;
 
-    final VideoServiceImplement videoService;
+    final VideoServiceImpl videoService;
     final WriteFileServiceImpl writeFileService;
 
-    VideoRest(VideoServiceImplement videoService, WriteFileServiceImpl writeFileService) {
+    VideoRest(VideoServiceImpl videoService, WriteFileServiceImpl writeFileService) {
         this.videoService = videoService;
         this.writeFileService = writeFileService;
         key = GenerateRandomPassword.key() + "::";

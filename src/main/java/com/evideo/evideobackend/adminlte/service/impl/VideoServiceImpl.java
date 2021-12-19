@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.adminlte.service.implement;
+package com.evideo.evideobackend.adminlte.service.impl;
 
 import com.evideo.evideobackend.adminlte.dao.VideoDao;
 import com.evideo.evideobackend.adminlte.service.VideoService;
@@ -11,11 +11,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
-public class VideoServiceImplement implements VideoService {
-    static Logger log = Logger.getLogger(VideoServiceImplement.class.getName());
+public class VideoServiceImpl implements VideoService {
+    static Logger log = Logger.getLogger(VideoServiceImpl.class.getName());
     final VideoDao videoDao;
 
-    VideoServiceImplement(VideoDao videoDao) {
+    VideoServiceImpl(VideoDao videoDao) {
         this.videoDao = videoDao;
     }
 

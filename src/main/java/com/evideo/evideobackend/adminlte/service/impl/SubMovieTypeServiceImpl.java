@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.adminlte.service.implement;
+package com.evideo.evideobackend.adminlte.service.impl;
 
 import com.evideo.evideobackend.adminlte.dao.SubMovieTypeDao;
 import com.evideo.evideobackend.adminlte.service.CRUDService;
@@ -11,11 +11,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SubMovieTypeServiceImplement implements CRUDService {
-    static Logger log = Logger.getLogger(SubMovieTypeServiceImplement.class.getName());
+public class SubMovieTypeServiceImpl implements CRUDService {
+    static Logger log = Logger.getLogger(SubMovieTypeServiceImpl.class.getName());
 
     final SubMovieTypeDao subMovieTypeDao;
-    SubMovieTypeServiceImplement(SubMovieTypeDao movieTypeDao) {
+    SubMovieTypeServiceImpl(SubMovieTypeDao movieTypeDao) {
         this.subMovieTypeDao = movieTypeDao;
     }
 

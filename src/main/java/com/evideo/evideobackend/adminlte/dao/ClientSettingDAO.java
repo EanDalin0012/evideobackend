@@ -7,4 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface ClientSettingDAO {
     JsonObjectArray read();
+    int insertVideoTypeDt(JsonObject jsonObject);
+    int deleteVideoTypeDt(JsonObject jsonObject);
+    int count();
 }

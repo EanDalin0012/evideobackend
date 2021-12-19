@@ -1,4 +1,4 @@
-package com.evideo.evideobackend.adminlte.service.implement;
+package com.evideo.evideobackend.adminlte.service.impl;
 
 import com.evideo.evideobackend.adminlte.service.UserRoleService;
 import com.evideo.evideobackend.core.dto.JsonObject;
@@ -7,7 +7,7 @@ import com.evideo.evideobackend.core.exception.ValidatorException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserRoleServiceImplement implements UserRoleService {
+public class UserRoleServiceImpl implements UserRoleService {
     @Override
     public int create(JsonObject jsonObject) throws ValidatorException {
         return 0;
